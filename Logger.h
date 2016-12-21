@@ -31,13 +31,13 @@ inline void initLogger( bool debug, int verbosity ) {
 
 	defaultConf.setGlobally( el::ConfigurationType::Filename, "log/log.log" );
 
-	defaultConf.setGlobally( el::ConfigurationType::Enabled, true );
-	defaultConf.set( el::Level::Trace, el::ConfigurationType::Enabled, debug );
-	defaultConf.setGlobally( el::ConfigurationType::ToFile, true );
-	defaultConf.setGlobally( el::ConfigurationType::ToStandardOutput, false );
-	defaultConf.setGlobally( el::ConfigurationType::MillisecondsWidth, debug ? 6 : 3 );
-	defaultConf.setGlobally( el::ConfigurationType::PerformanceTracking, debug );
-	defaultConf.setGlobally( el::ConfigurationType::MaxLogFileSize, debug ? 1 * 1024 * 1024 * 1024 : 128 * 1024 * 1024 );
+	defaultConf.setGlobally( el::ConfigurationType::Enabled, "true" );
+	defaultConf.set( el::Level::Trace, el::ConfigurationType::Enabled, debug ? "true" : "false" );
+	defaultConf.setGlobally( el::ConfigurationType::ToFile, "true" );
+	defaultConf.setGlobally( el::ConfigurationType::ToStandardOutput, "false" );
+	defaultConf.setGlobally( el::ConfigurationType::MillisecondsWidth, debug ? "6" : "3" );
+	defaultConf.setGlobally( el::ConfigurationType::PerformanceTracking, debug ? "true" : "false" );
+	defaultConf.setGlobally( el::ConfigurationType::MaxLogFileSize, debug ? "1073741824" : "134217728" );
 
 	// Set options
 	el::Loggers::reconfigureLogger( "default", defaultConf );

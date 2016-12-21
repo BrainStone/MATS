@@ -8,7 +8,7 @@ SRC_EXT = cpp
 # Path to the source directory, relative to the makefile
 SRC_PATH = .
 # Space-separated pkg-config libraries used by this project
-LIBS = ncurses
+LIBS = ncurses libconfig++
 # General compiler flags
 COMPILE_FLAGS = -std=c++11 -Wall -Wextra
 # Additional release-specific flags
@@ -18,7 +18,7 @@ DCOMPILE_FLAGS = -D__DEBUG__ -Og -g3
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH)
 # General linker settings
-LINK_FLAGS =
+LINK_FLAGS = -lboost_program_options
 # Additional release-specific linker settings
 RLINK_FLAGS = -Wl,--gc-sections -fopenmp
 # Additional debug-specific linker settings

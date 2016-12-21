@@ -15,9 +15,9 @@
 #include "easylogging++.h"
 
 inline void initLogger( bool debug, int verbosity ) {
-	constexpr std::string formatDefault = "%datetime [%level %vlevel] %msg";
-	constexpr std::string formatVerbose = "%datetime [%level %vlevel] %msg";
-	constexpr std::string formatDetailed = "%datetime [%level] %fbase: %line [%func]: %msg";
+	const std::string formatDefault = "%datetime [%level %vlevel] %msg";
+	const std::string formatVerbose = "%datetime [%level %vlevel] %msg";
+	const std::string formatDetailed = "%datetime [%level] %fbase: %line [%func]: %msg";
 
 	el::Configurations defaultConf;
 	defaultConf.setToDefault();

@@ -55,5 +55,5 @@ int main( int argc, char* argv[] ) {
 
 	sleep( 10 );
 
-	LOG( INFO ) << "10 more seconds and the end".
+	LOG( INFO ) << "10 more seconds and the end";
 }

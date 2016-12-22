@@ -77,3 +77,11 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Visual Studio
+# =========================
+
+Assets/
+Debug/
+Release/
+MATS.vcxproj*

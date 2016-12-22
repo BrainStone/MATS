@@ -1,5 +1,6 @@
 #include <boost/program_options.hpp>
 #include <sstream>
+#include <unistd.h>
 
 #include "Logger.h"
 
@@ -31,6 +32,8 @@ int main( int argc, char* argv[] ) {
 	debug = vm.count( "debug" );
 	initLogger( debug, verbosity );
 
+	deamon( 0, 0 );
+
 	std::stringstream sstream;
 	sstream << '\t';
 
@@ -45,4 +48,12 @@ int main( int argc, char* argv[] ) {
 	if ( debug ) {
 		LOG( INFO ) << "Using debug";
 	}
+
+	sleep( 10 );
+
+	LOG( INFO ) << "Test after 10 seconds";
+
+	sleep( 10 );
+
+	LOG( INFO ) << "10 more seconds and the end".
 }

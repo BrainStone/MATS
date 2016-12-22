@@ -32,7 +32,7 @@ int main( int argc, char* argv[] ) {
 	debug = vm.count( "debug" );
 	initLogger( debug, verbosity );
 
-	deamon( 0, 0 );
+	daemon( 0, 0 );
 
 	std::stringstream sstream;
 	sstream << '\t';

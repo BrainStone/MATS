@@ -27,7 +27,7 @@ inline void initLogger( bool debug, int verbosity ) {
 	defaultConf.set( el::Level::Warning, el::ConfigurationType::Format, formatDetailed );
 	defaultConf.set( el::Level::Error, el::ConfigurationType::Format, formatDetailed );
 	defaultConf.set( el::Level::Fatal, el::ConfigurationType::Format, formatDetailed );
-	defaultConf.setGlobally( el::ConfigurationType::Filename, "log/log.log" );
+	defaultConf.setGlobally( el::ConfigurationType::Filename, "/var/log/mats/client-brainstone.log" );
 	defaultConf.setGlobally( el::ConfigurationType::Enabled, "true" );
 	defaultConf.setGlobally( el::ConfigurationType::ToFile, "true" );
 	defaultConf.setGlobally( el::ConfigurationType::ToStandardOutput, "false" );

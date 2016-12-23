@@ -85,3 +85,13 @@ Assets/
 Debug/
 Release/
 MATS.vcxproj*
+
+
+# Misc
+# =========================
+
+mats
+log/*
+bin/*
+build/*
+.*_time

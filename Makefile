@@ -8,7 +8,7 @@ SRC_EXT = cpp
 # Path to the source directory, relative to the makefile
 SRC_PATH = .
 # Space-separated pkg-config libraries used by this project
-LIBS = ncurses libconfig++
+LIBS = ncurses ncurses++ form menu tic panel libconfig++
 # General compiler flags
 COMPILE_FLAGS = -std=c++14 -Wall -Wextra
 # Additional release-specific flags

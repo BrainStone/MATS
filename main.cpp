@@ -1,7 +1,9 @@
 #include <boost/program_options.hpp>
+#include <ncurses.h>
 #include <sstream>
 #include <unistd.h>
 
+#include "Test.h"
 #include "Logger.h"
 
 namespace po = boost::program_options;
@@ -32,7 +34,7 @@ int main( int argc, char* argv[] ) {
 	debug = vm.count( "debug" );
 	initLogger( debug, verbosity );
 
-	daemon( 0, 0 );
+	// daemon( 0, 0 );
 
 	std::stringstream sstream;
 	sstream << '\t';
@@ -49,11 +51,12 @@ int main( int argc, char* argv[] ) {
 		LOG( INFO ) << "Using debug";
 	}
 
-	sleep( 10 );
+	try {
+		TestApplication Demo;
+		Demo.run();
+	} catch ( const NCursesException& e ) {
+		LOG( ERROR ) << typeid(e).name() << ": " << e.message;
+	}
 
-	LOG( INFO ) << "Test after 10 seconds";
-
-	sleep( 10 );
-
-	LOG( INFO ) << "10 more seconds and the end";
+	return 0;
 }

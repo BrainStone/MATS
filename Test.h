@@ -24,12 +24,16 @@
 #define _nc_SLIMIT(n)		/* nothing */
 #endif
 
+#include <algorithm>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
 #include "curses++.h"
 #include "Logger.h"
+
+#undef max
+#undef min
 
 //
 // -------------------------------------------------------------------------
@@ -318,12 +322,13 @@ public:
 	PadAction( const char* s ) : NCursesMenuItem( s ) {}
 
 	bool action() {
-		const int GRIDSIZE = 3;
-		const int PADSIZE = 200;
-		unsigned gridcount = 0;
-
 		NCursesPanel mystd;
 		NCursesPanel P( mystd.lines() - 2, mystd.cols() - 2, 1, 1 );
+
+		const int GRIDSIZE = 3;
+		const int PADSIZE = std::max( { 200, mystd.cols() + 20, mystd.lines() + 20 } );
+		unsigned gridcount = 0;
+
 		NCursesFramedPad FP( P, PADSIZE, PADSIZE );
 
 		for ( int i = 0; i < PADSIZE; i++ ) {

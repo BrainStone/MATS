@@ -1,46 +1,3 @@
-#ifndef NCURSES_CPLUS_INTERNAL_H
-#define NCURSES_CPLUS_INTERNAL_H 1
-
-#if USE_RCS_IDS
-#define MODULE_ID(id) static const char Ident[] = id;
-#else
-#define MODULE_ID(id) /*nothing*/
-#endif
-
-#ifdef __MINGW32__
-#include <nc_mingw.h>
-#undef KEY_EVENT
-#endif
-
-#ifndef _QNX_SOURCE
-#include <stdlib.h>
-#include <string.h>
-#endif
-
-#ifndef CTRL
-#define CTRL(x) ((x) & 0x1f)
-#endif
-
-#ifndef NULL
-#define NULL 0
-#endif
-
-#ifndef STRING_HACKS_H
-#define STRING_HACKS_H 1
-
-/*
-* $Id: nc_string.h,v 1.4 2013/12/15 01:09:19 tom Exp $
-*
-* String-hacks.  Use these macros to stifle warnings on (presumably) correct
-* uses of strcat, strcpy and sprintf.
-*
-* By the way -
-* A fundamental limitation of the interfaces (and frequent issue in bug
-* reports using these functions) is that sizes are passed as unsigned values
-* (with associated sign-extension problems), limiting their effectiveness
-* when checking for buffer overflow.
-*/
-
 #ifdef __cplusplus
 #define NCURSES_VOID		/* nothing */
 #else
@@ -67,16 +24,12 @@
 #define _nc_SLIMIT(n)		/* nothing */
 #endif
 
-#endif /* STRING_HACKS_H */
-
-#endif /* NCURSES_CPLUS_INTERNAL_H */
-
-#include "cursesapp.h"
-#include "cursesm.h"
-#include "cursesf.h"
-#include "Logger.h"
-
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+
+#include "curses++.h"
+#include "Logger.h"
 
 //
 // -------------------------------------------------------------------------
@@ -327,7 +280,7 @@ public:
 
 	bool action() {
 		try {
-			Soft_Label_Key_Set* S = new Soft_Label_Key_Set( Soft_Label_Key_Set::PC_Style_With_Index );
+			Soft_Label_Key_Set* S = new Soft_Label_Key_Set;
 
 			for ( int i = 1; i <= S->labels(); i++ ) {
 				char buf[8];
@@ -531,11 +484,11 @@ public:
 class TestApplication : public NCursesApplication {
 protected:
 	int titlesize() const {
-		return 30;
+		return 1;
 	}
 	void title();
 	Soft_Label_Key_Set::Label_Layout useSLKs() const {
-		return Soft_Label_Key_Set::PC_Style_With_Index;
+		return Soft_Label_Key_Set::PC_Style;
 	}
 	void init_labels( Soft_Label_Key_Set& S ) const;
 

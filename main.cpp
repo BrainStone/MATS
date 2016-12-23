@@ -53,7 +53,7 @@ int main( int argc, char* argv[] ) {
 
 	try {
 		TestApplication Demo;
-		Demo.run();
+		Demo();
 	} catch ( const NCursesException& e ) {
 		LOG( ERROR ) << typeid(e).name() << ": " << e.message;
 	}

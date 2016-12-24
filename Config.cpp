@@ -6,23 +6,24 @@ namespace config {
 
 	fs::path getConfigDir() {
 		char* dirPointer;
-		fs::path dir;
 
-		dirPointer = getenv( "XDG_CONFIG_HOME" );
+		dirPointer = getenv( "MATS_HOME" );
 
 		if ( dirPointer == NULL ) {
-			dirPointer = getenv( "HOME" );
+			dirPointer = getenv( "XDG_CONFIG_HOME" );
 
 			if ( dirPointer == NULL ) {
-				dir = getpwuid( getuid() )->pw_dir;
-			} else {
-				dir = dirPointer;
-			}
-		} else {
-			dir = dirPointer;
-		}
+				dirPointer = getenv( "HOME" );
 
-		return dir / confDir;
+				if ( dirPointer == NULL ) {
+					dirPointer = getpwuid( getuid() )->pw_dir;
+				}
+			}
+
+			return dirPointer / confDir;
+		} else {
+			return dirPointer;
+		}
 	}
 
 	fs::path getGlobalConfigDir() {
@@ -41,20 +42,30 @@ namespace config {
 		return getGlobalConfigDir() / mainConf;
 	}
 
+	void createFileIfNotExists( const fs::path& path ) {
+		fs::create_directories( path.parent_path() );
+
+		if ( !fs::exists( path ) )
+			std::ofstream().open( path );
+	}
+
 	void loadConfigs() {
-		config.readFile( pathToCString( getMainConf() ) );
-		globalConfig.readFile( pathToCString( getGlobalMainConf() ) );
+		if ( !fs::exists( getConfigDir() ) ) {
+			fs::create_directories( getConfigDir() );
+			fs::permissions( getConfigDir(), fs::perms::owner_all );
+		}
+
+		createFileIfNotExists( getMainConf() );
+
+		config.readFile( getMainConf().string().c_str() );
+		globalConfig.readFile( getGlobalMainConf().string().c_str() );
 	}
 
 	void safeConfig() {
-		config.writeFile( pathToCString( getMainConf() ) );
+		config.writeFile( getMainConf().string().c_str() );
 	}
 
 	void safeGlobalConfig() {
-		config.writeFile( pathToCString( getGlobalMainConf()) );
-	}
-
-	const char* pathToCString( const fs::path& path ) {
-		return path.string().c_str();
+		config.writeFile( getGlobalMainConf().string().c_str() );
 	}
 }

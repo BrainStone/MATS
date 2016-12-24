@@ -3,6 +3,7 @@
 #include <sstream>
 #include <unistd.h>
 
+#include "Config.h"
 #include "Test.h"
 #include "Logger.h"
 
@@ -30,6 +31,8 @@ int main( int argc, char* argv[] ) {
 		std::cout << desc << "\n";
 		return 1;
 	}
+
+	config::loadConfigs();
 
 	debug = vm.count( "debug" );
 	initLogger( debug, verbosity );

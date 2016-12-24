@@ -2,6 +2,7 @@
 #define Config_H
 
 #include <experimental/filesystem>
+#include <fstream>
 #include <libconfig.h++>
 #include <pwd.h>
 #include <string>
@@ -23,11 +24,11 @@ namespace config {
 	fs::path getServersConf();
 	fs::path getGlobalMainConf();
 
+	void createFileIfNotExists( const fs::path& path );
+
 	void loadConfigs();
 	void safeConfig();
 	void safeGlobalConfig();
-
-	const char* pathToCString( const fs::path& path );
 }
 
 #endif // #ifndef Config_H

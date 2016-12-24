@@ -11,14 +11,19 @@
 
 #include <string>
 
+#include "Config.h"
 // See https://github.com/easylogging/easyloggingpp for Doc
 #include "easylogging++.h"
 
-inline void initLogger( bool debug, int verbosity ) {
+inline void initLogger( bool debug, int verbosity, bool deamon = false ) {
 	const std::string formatDefault = "%datetime [%level] %msg";
 	const std::string formatVerbose = "%datetime [%level %vlevel] %msg";
 	const std::string formatDetailed = "%datetime [%level] %fbase: %line [%func]: %msg";
+	const std::string deamonLog = "/deamon.log";
+	const std::string userLog = "/client-brainstone.log";
+	std::string logBasePath = "/var/log/mats";
 
+	config::globalConfig.lookupValue( "logPath", logBasePath );
 	el::Configurations defaultConf;
 	defaultConf.setToDefault();
 
@@ -27,7 +32,7 @@ inline void initLogger( bool debug, int verbosity ) {
 	defaultConf.set( el::Level::Warning, el::ConfigurationType::Format, formatDetailed );
 	defaultConf.set( el::Level::Error, el::ConfigurationType::Format, formatDetailed );
 	defaultConf.set( el::Level::Fatal, el::ConfigurationType::Format, formatDetailed );
-	defaultConf.setGlobally( el::ConfigurationType::Filename, "/var/log/mats/client-brainstone.log" );
+	defaultConf.setGlobally( el::ConfigurationType::Filename, logBasePath + (deamon? deamonLog : userLog) );
 	defaultConf.setGlobally( el::ConfigurationType::Enabled, "true" );
 	defaultConf.setGlobally( el::ConfigurationType::ToFile, "true" );
 	defaultConf.setGlobally( el::ConfigurationType::ToStandardOutput, "false" );

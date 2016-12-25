@@ -1,4 +1,5 @@
 #include <boost/program_options.hpp>
+#include <ctime>
 #include <ncurses.h>
 #include <sstream>
 #include <unistd.h>
@@ -46,8 +47,10 @@ int main( int argc, char* argv[] ) {
 		sstream << ' ' << argv[i];
 	}
 
-	LOG( INFO ) << "Starting Programm version:";
+	LOG( INFO ) << "Starting \"MATS - Minecraft Administrative Tools for Servers\" version:";
 	LOG( INFO ) << "\t" VERSION_STRING;
+	LOG( INFO ) << "Built:";
+	LOG( INFO ) << '\t' << buildTime();
 	LOG( DEBUG ) << "Parameters:";
 	LOG( DEBUG ) << sstream.str();
 	LOG( DEBUG ) << "Verbostiy level: " << verbosity;

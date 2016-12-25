@@ -3,12 +3,12 @@
 
 #define NCURSES_WIDECHAR 1
 
-#include <ncurses.h>
-#include <cursesapp.h>
-#include <cursesf.h>
-#include <cursesm.h>
-#include <cursesp.h>
-#include <cursesw.h>
+#include <ncursesw/ncurses.h>
+#include <ncursesw/cursesapp.h>
+#include <ncursesw/cursesf.h>
+#include <ncursesw/cursesm.h>
+#include <ncursesw/cursesp.h>
+#include <ncursesw/cursesw.h>
 
 template<typename T>
 constexpr T CTRL( T x ) {

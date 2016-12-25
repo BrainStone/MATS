@@ -14,7 +14,7 @@ Request.
 There are no precompiled binaries available so you have to compile it yourself. Just follow these install instructions:
 
     $ # Install dependencies (Skip this if you have a C++14 compatible compiler, boost, config++ and ncurses installed for compilation)
-    $ sudo apt-get install g++ libboost-all-dev libconfig++-dev libncurses-dev
+    $ sudo apt-get install g++ libboost-all-dev libconfig++-dev libncursesw5-dev
     $ git clone https://github.com/BrainStone/MATS
     $ cd MATS
     $ make

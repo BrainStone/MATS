@@ -8,15 +8,21 @@ debug:
   script:
   - make debug
   when: on_success
+  expect:
+  - tags
   
 release:
   stage: release
   script:
   - make release
   when: on_success
+  expect:
+  - tags
 
 clean:
   stage: clean
   script:
   - make clean
   when: always
+  expect:
+  - tags

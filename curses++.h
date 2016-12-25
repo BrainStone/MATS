@@ -1,7 +1,9 @@
 #ifndef cursesPP_H
 #define cursesPP_H
 
-#include <curses.h>
+#define NCURSES_WIDECHAR 1
+
+#include <ncurses.h>
 #include <cursesapp.h>
 #include <cursesf.h>
 #include <cursesm.h>

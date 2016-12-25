@@ -30,6 +30,7 @@
 #include <unistd.h>
 
 #include "curses++.h"
+#include "Dialog.h"
 #include "Logger.h"
 
 #undef max
@@ -524,6 +525,22 @@ void TestApplication::title() {
 
 
 int TestApplication::run() {
+	DialogYesNo D( "Simple Test" );
+	D();
+	LOG( INFO ) << D.getResult();
+
+	DialogYesNo B( "Super long text and stuff xD xD" );
+	B();
+
+	DialogOk O( "Ok box" );
+	O();
+
+	Dialog C( "Custom box with custom choices", { "Custom1", "Foo", "Bar" } );
+	C();
+
+	Dialog C1( "Custom box with even more custom choices", { "Custom1", "Foo", "Bar", "Custom2", "Tree" } );
+	C1();
+
 	try {
 		MyMenu M;
 		M();

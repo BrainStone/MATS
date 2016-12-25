@@ -21,4 +21,3 @@ There are no precompiled binaries available so you have to compile it yourself. 
     $ sudo make install
 
 After that you should be able to call the program `mats`.
-  

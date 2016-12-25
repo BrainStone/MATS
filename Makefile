@@ -176,12 +176,16 @@ dirs:
 install:
 	@echo "Installing to $(DESTDIR)$(INSTALL_PREFIX)/bin"
 	@$(INSTALL_PROGRAM) $(BIN_PATH)/$(BIN_NAME) $(DESTDIR)$(INSTALL_PREFIX)/bin
+	@echo "Installing config files to /etc/$(BIN_NAME)"
+	@mkdir -p /etc/$(BIN_NAME)
+	@$(INSTALL_DATA) default_config/*.cfg /etc/$(BIN_NAME)
 
 # Uninstalls the program
 .PHONY: uninstall
 uninstall:
 	@echo "Removing $(DESTDIR)$(INSTALL_PREFIX)/bin/$(BIN_NAME)"
 	@$(RM) $(DESTDIR)$(INSTALL_PREFIX)/bin/$(BIN_NAME)
+	@echo "Config files in /etc/$(BIN_NAME) remain. Delete them manually"
 
 # Removes all build files
 .PHONY: clean

@@ -1,6 +1,10 @@
 #ifndef Logger_H
 #define Logger_H
 
+#ifndef VERSION_STRING
+#	define VERSION_STRING "UNKNOWN"
+#endif
+
 // Compile options for easylogging++
 //#define ELPP_UNICODE
 #define ELIPP_THREAD_SAFE

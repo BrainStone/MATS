@@ -46,7 +46,9 @@ int main( int argc, char* argv[] ) {
 		sstream << ' ' << argv[i];
 	}
 
-	LOG( DEBUG ) << "Starting Programm with parameters: ";
+	LOG( INFO ) << "Starting Programm version:";
+	LOG( INFO ) << "\t" VERSION_STRING;
+	LOG( DEBUG ) << "Parameters:";
 	LOG( DEBUG ) << sstream.str();
 	LOG( DEBUG ) << "Verbostiy level: " << verbosity;
 

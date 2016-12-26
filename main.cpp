@@ -20,6 +20,7 @@ int main( int argc, char* argv[] ) {
 	po::options_description desc( "Allowed options" );
 	desc.add_options()
 		("help,h", "Displays this help page")
+		("version,V", "Displays the version")
 		("debug,d", "Use debug logger format")
 		("verbose,v", po::value<int>( &verbosity )->default_value( 0 )->implicit_value( 9 ), "Sets the verbosity level (0-9). Sets the level to 9 if no level is specified. Verbosity level is 0 if this option is not specified")
 		;
@@ -29,8 +30,14 @@ int main( int argc, char* argv[] ) {
 	po::notify( vm );
 
 	if ( vm.count( "help" ) ) {
-		std::cout << desc << "\n";
-		return 1;
+		std::cout << desc << std::endl;
+
+		return 0;
+	} else if ( vm.count( "version" ) ) {
+		std::cout << "MATS - Minecraft Administrative Tools for Servers" << "\n"
+			<< "Version: " VERSION_STRING "\nBuilt: " << buildTime() << std::endl;
+
+		return 0;
 	}
 
 	config::loadConfigs();

@@ -1,9 +1,9 @@
 #include <boost/program_options.hpp>
 #include <ctime>
-#include <ncurses.h>
 #include <sstream>
 #include <unistd.h>
 
+#include "Client.h"
 #include "Config.h"
 #include "Test.h"
 #include "Logger.h"
@@ -35,7 +35,7 @@ int main( int argc, char* argv[] ) {
 		return 0;
 	} else if ( vm.count( "version" ) ) {
 		std::cout << "MATS - Minecraft Administrative Tools for Servers" << "\n"
-			<< "Version: " VERSION_STRING "\nBuilt: " << buildTime() << std::endl;
+			<< "Version: v" VERSION_STRING "\nBuilt: " << buildTime() << std::endl;
 
 		return 0;
 	}
@@ -55,7 +55,7 @@ int main( int argc, char* argv[] ) {
 	}
 
 	LOG( INFO ) << "Starting \"MATS - Minecraft Administrative Tools for Servers\" version:";
-	LOG( INFO ) << "\t" VERSION_STRING;
+	LOG( INFO ) << "\tv" VERSION_STRING;
 	LOG( INFO ) << "Built:";
 	LOG( INFO ) << '\t' << buildTime();
 	LOG( DEBUG ) << "Parameters:";
@@ -67,8 +67,8 @@ int main( int argc, char* argv[] ) {
 	}
 
 	try {
-		TestApplication Demo;
-		Demo();
+		Client client;
+		client();
 	} catch ( const NCursesException& e ) {
 		LOG( ERROR ) << typeid(e).name() << ": " << e.message;
 	}

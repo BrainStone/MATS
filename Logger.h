@@ -5,6 +5,10 @@
 #	define VERSION_STRING "UNKNOWN"
 #endif
 
+#ifndef VERSION_STRING_SHORT
+#	define VERSION_STRING_SHORT "UNKNOWN"
+#endif
+
 #ifndef BUILD_TIME
 #	define BUILD_TIME 0L
 #endif

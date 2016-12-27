@@ -1,6 +1,15 @@
 #include "Config.h"
 
 namespace config {
+	const std::map<std::type_index, libconfig::Setting::Type> typeMapping( {
+		{ typeid(bool), libconfig::Setting::TypeBoolean },
+		{ typeid(int), libconfig::Setting::TypeInt },
+		{ typeid(long long), libconfig::Setting::TypeInt64 },
+		{ typeid(float), libconfig::Setting::TypeFloat },
+		{ typeid(char*), libconfig::Setting::TypeString },
+		{ typeid(std::string), libconfig::Setting::TypeString }
+	} );
+
 	libconfig::Config config;
 	libconfig::Config globalConfig;
 
@@ -68,4 +77,20 @@ namespace config {
 	void safeGlobalConfig() {
 		config.writeFile( getGlobalMainConf().string().c_str() );
 	}
+
+	template<typename T>
+	T lookupWithDefault( const std::string& path, T defaultValue ) {
+		if ( !config.lookupValue( path, defaultValue ) ) {
+			config.getRoot().add( path, typeMapping.at( typeid(T) ) ) = defaultValue;
+		}
+
+		return defaultValue;
+	}
+
+	template bool lookupWithDefault<bool>( const std::string& path, bool defaultValue );
+	template int lookupWithDefault<int>( const std::string& path, int defaultValue );
+	template long long lookupWithDefault<long long>( const std::string& path, long long defaultValue );
+	template float lookupWithDefault<float>( const std::string& path, float defaultValue );
+	template const char* lookupWithDefault<const char*>( const std::string& path, const char* defaultValue );
+	template std::string lookupWithDefault<std::string>( const std::string& path, std::string defaultValue );
 }

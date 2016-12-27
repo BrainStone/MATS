@@ -4,8 +4,10 @@
 #include <experimental/filesystem>
 #include <fstream>
 #include <libconfig.h++>
+#include <map>
 #include <pwd.h>
 #include <string>
+#include <typeindex>
 #include <unistd.h>
 
 namespace config {
@@ -29,6 +31,9 @@ namespace config {
 	void loadConfigs();
 	void safeConfig();
 	void safeGlobalConfig();
+
+	template<typename T>
+	extern T lookupWithDefault( const std::string& path, T defaultValue );
 }
 
 #endif // #ifndef Config_H

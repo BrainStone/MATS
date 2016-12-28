@@ -18,6 +18,7 @@ namespace config {
 	static const fs::path serversConf = "servers.cfg";
 
 	extern libconfig::Config config;
+	extern libconfig::Config serversConfig;
 	extern libconfig::Config globalConfig;
 
 	fs::path getConfigDir();
@@ -28,12 +29,11 @@ namespace config {
 
 	void createFileIfNotExists( const fs::path& path );
 
-	void loadConfigs();
-	void safeConfig();
-	void safeGlobalConfig();
+	void loadClientConfigs();
+	void safeServersConfig();
 
 	template<typename T>
-	extern T lookupWithDefault( const std::string& path, T defaultValue );
+	extern T lookupWithDefault( const libconfig::Config& config, const std::string& path, T defaultValue );
 }
 
 #endif // #ifndef Config_H

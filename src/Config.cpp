@@ -11,6 +11,7 @@ namespace config {
 	} );
 
 	libconfig::Config config;
+	libconfig::Config serversConfig;
 	libconfig::Config globalConfig;
 
 	fs::path getConfigDir() {
@@ -58,28 +59,26 @@ namespace config {
 			std::ofstream().open( path );
 	}
 
-	void loadConfigs() {
+	void loadClientConfigs() {
 		if ( !fs::exists( getConfigDir() ) ) {
 			fs::create_directories( getConfigDir() );
 			fs::permissions( getConfigDir(), fs::perms::owner_all );
 		}
 
 		createFileIfNotExists( getMainConf() );
+		createFileIfNotExists( getServersConf() );
 
 		config.readFile( getMainConf().string().c_str() );
+		serversConfig.readFile( getMainConf().string().c_str() );
 		globalConfig.readFile( getGlobalMainConf().string().c_str() );
 	}
 
-	void safeConfig() {
-		config.writeFile( getMainConf().string().c_str() );
-	}
-
-	void safeGlobalConfig() {
-		config.writeFile( getGlobalMainConf().string().c_str() );
+	void safeServersConfig() {
+		serversConfig.writeFile( getMainConf().string().c_str() );
 	}
 
 	template<typename T>
-	T lookupWithDefault( const std::string& path, T defaultValue ) {
+	T lookupWithDefault( const libconfig::Config& config, const std::string& path, T defaultValue ) {
 		if ( !config.lookupValue( path, defaultValue ) ) {
 			config.getRoot().add( path, typeMapping.at( typeid(T) ) ) = defaultValue;
 		}
@@ -87,10 +86,10 @@ namespace config {
 		return defaultValue;
 	}
 
-	template bool lookupWithDefault<bool>( const std::string& path, bool defaultValue );
-	template int lookupWithDefault<int>( const std::string& path, int defaultValue );
-	template long long lookupWithDefault<long long>( const std::string& path, long long defaultValue );
-	template float lookupWithDefault<float>( const std::string& path, float defaultValue );
-	template const char* lookupWithDefault<const char*>( const std::string& path, const char* defaultValue );
-	template std::string lookupWithDefault<std::string>( const std::string& path, std::string defaultValue );
+	template bool lookupWithDefault<bool>( const libconfig::Config& config, const std::string& path, bool defaultValue );
+	template int lookupWithDefault<int>( const libconfig::Config& config, const std::string& path, int defaultValue );
+	template long long lookupWithDefault<long long>( const libconfig::Config& config, const std::string& path, long long defaultValue );
+	template float lookupWithDefault<float>( const libconfig::Config& config, const std::string& path, float defaultValue );
+	template const char* lookupWithDefault<const char*>( const libconfig::Config& config, const std::string& path, const char* defaultValue );
+	template std::string lookupWithDefault<std::string>( const libconfig::Config& config, const std::string& path, std::string defaultValue );
 }

@@ -37,7 +37,7 @@ int main( int argc, char* argv[] ) {
 		return 0;
 	}
 
-	config::loadConfigs();
+	config::loadClientConfigs();
 
 	debug = vm.count( "debug" );
 	initLogger( debug, verbosity );

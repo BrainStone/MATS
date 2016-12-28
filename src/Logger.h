@@ -1,6 +1,8 @@
 #ifndef Logger_H
 #define Logger_H
 
+#define __DATE_TIME__ __DATE__ " " __TIME__
+
 #ifndef VERSION_STRING
 #	define VERSION_STRING "UNKNOWN"
 #endif

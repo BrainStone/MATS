@@ -33,7 +33,7 @@ int main( int argc, char* argv[] ) {
 
 		return 0;
 	} else if ( vm.count( "version" ) ) {
-		std::cout << "MATS - Minecraft Administrative Tools for Servers\nVersion: v" VERSION_STRING "\nBuilt: " << buildTime() << std::endl;
+		std::cout << "MATS - Minecraft Administrative Tools for Servers\nVersion: v" VERSION_STRING "\nBuilt: " __DATE_TIME__ << std::endl;
 
 		return 0;
 	}
@@ -55,7 +55,7 @@ int main( int argc, char* argv[] ) {
 	LOG( INFO ) << "Starting \"MATS - Minecraft Administrative Tools for Servers\" version:";
 	LOG( INFO ) << "\tv" VERSION_STRING;
 	LOG( INFO ) << "Built:";
-	LOG( INFO ) << "\t" __DATE__ " " __TIME__;
+	LOG( INFO ) << "\t" __DATE_TIME__;
 	LOG( DEBUG ) << "Parameters:";
 	LOG( DEBUG ) << sstream.str();
 	LOG( DEBUG ) << "Verbostiy level: " << verbosity;

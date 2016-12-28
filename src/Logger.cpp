@@ -45,15 +45,3 @@ void initLogger( bool debug, int verbosity, bool deamon ) {
 
 	START_EASYLOGGINGPP( 1, new char*[0] );
 }
-
-std::string unixToHumanReadable( long timestamp ) {
-	time_t time( timestamp );
-	std::string timeString( std::ctime( &time ) );
-	timeString.pop_back();
-
-	return timeString;
-}
-
-std::string buildTime() {
-	return unixToHumanReadable( BUILD_TIME );
-}

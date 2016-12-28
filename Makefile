@@ -121,8 +121,7 @@ USE_VERSION := false
 # If this isn't a git repo or the repo has no tags, git describe will return non-zero
 ifeq ($(shell git describe > /dev/null 2>&1 ; echo $$?), 0)
 	USE_VERSION := true
-	BUILD_TIME := $(shell date '+%s')
-	VERSION := $(shell git describe --tags --long --dirty="-$(shell git diff 2> /dev/null | sha1sum | cut -c-7)" --always | \
+	VERSION := $(shell git describe --tags --long --dirty="-DEV-$(shell git diff 2> /dev/null | sha1sum | cut -c-7)" --always | \
 		sed 's/v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)-\?.*-\([0-9]*\)-g\(.*\)/\1 \2 \3 \4 \5/g')
 	VERSION_MAJOR := $(word 1, $(VERSION))
 	VERSION_MINOR := $(word 2, $(VERSION))
@@ -134,7 +133,6 @@ ifeq ($(shell git describe > /dev/null 2>&1 ; echo $$?), 0)
 	VERSION_STRING := \
 		"$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH).$(VERSION_REVISION) ($(VERSION_HASH))"
 	override CXXFLAGS := $(CXXFLAGS) \
-		-D BUILD_TIME=$(BUILD_TIME)L \
 		-D VERSION_MAJOR=$(VERSION_MAJOR) \
 		-D VERSION_MINOR=$(VERSION_MINOR) \
 		-D VERSION_PATCH=$(VERSION_PATCH) \

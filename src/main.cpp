@@ -55,7 +55,7 @@ int main( int argc, char* argv[] ) {
 	LOG( INFO ) << "Starting \"MATS - Minecraft Administrative Tools for Servers\" version:";
 	LOG( INFO ) << "\tv" VERSION_STRING;
 	LOG( INFO ) << "Built:";
-	LOG( INFO ) << '\t' << buildTime();
+	LOG( INFO ) << "\t" __DATE__ " " __TIME__;
 	LOG( DEBUG ) << "Parameters:";
 	LOG( DEBUG ) << sstream.str();
 	LOG( DEBUG ) << "Verbostiy level: " << verbosity;

@@ -9,10 +9,6 @@
 #	define VERSION_STRING_SHORT "UNKNOWN"
 #endif
 
-#ifndef BUILD_TIME
-#	define BUILD_TIME 0L
-#endif
-
 // Compile options for easylogging++
 #define ELPP_DISABLE_PERFORMANCE_TRACKING
 #define ELPP_NO_DEFAULT_LOG_FILE
@@ -29,7 +25,4 @@
 #include "../easyloggingpp/src/easylogging++.h"
 
 void initLogger( bool debug, int verbosity, bool deamon = false );
-std::string unixToHumanReadable( long timestamp );
-std::string buildTime();
-
 #endif // #ifndef Logger_H

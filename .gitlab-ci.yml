@@ -1,4 +1,8 @@
+before_script:
+  - git submodule update --init --recursive
+
 stages:
+- clean
 - debug
 - release
 - clean

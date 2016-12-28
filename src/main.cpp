@@ -16,10 +16,10 @@ int main( int argc, char* argv[] ) {
 
 	po::options_description desc( "Allowed options" );
 	desc.add_options()
-		("help,h", "Displays this help page")
-		("version,V", "Displays the version")
-		("debug,d", "Use debug logger format")
+		("debug", "Increase logging verbosity to be able to trace the program. Use this option when reporting bugs.\n(WARNING: This can really spam your logs. So don't use it unless you have to.)")
 		("verbose,v", po::value<int>( &verbosity )->default_value( 0 )->implicit_value( 9 ), "Sets the verbosity level (0-9). Sets the level to 9 if no level is specified. Verbosity level is 0 if this option is not specified")
+		("help,h", "Displays this help page")
+		("version,V", "Displays the version and build time")
 		;
 
 	po::variables_map vm;

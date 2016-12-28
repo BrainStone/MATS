@@ -10,9 +10,6 @@
 
 namespace po = boost::program_options;
 
-// Initialize Easylogging++
-INITIALIZE_EASYLOGGINGPP;
-
 int main( int argc, char* argv[] ) {
 	bool debug;
 	int verbosity;

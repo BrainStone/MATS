@@ -1,5 +1,8 @@
 #include "Logger.h"
 
+// Initialize Easylogging++
+INITIALIZE_EASYLOGGINGPP
+
 void initLogger( bool debug, int verbosity, bool deamon ) {
 	const std::string formatDefault = "%datetime [%level] %msg";
 	const std::string formatVerbose = "%datetime [%level %vlevel] %msg";

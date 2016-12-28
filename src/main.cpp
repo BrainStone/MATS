@@ -14,7 +14,7 @@ int main( int argc, char* argv[] ) {
 	bool debug;
 	int verbosity;
 
-	po::options_description desc( "Allowed options" );
+	po::options_description desc( "Options" );
 	desc.add_options()
 		("debug", "Increase logging verbosity to be able to trace the program. Use this option when reporting bugs.\n(WARNING: This can really spam your logs. So don't use it unless you have to.)")
 		("verbose,v", po::value<int>( &verbosity )->default_value( 0 )->implicit_value( 9 ), "Sets the verbosity level (0-9). Sets the level to 9 if no level is specified. Verbosity level is 0 if this option is not specified")
@@ -27,12 +27,13 @@ int main( int argc, char* argv[] ) {
 	po::notify( vm );
 
 	if ( vm.count( "help" ) ) {
-		std::cout << desc << std::endl;
+		std::cout << "MATS - Minecraft Administrative Tools for Servers\nVersion: v" VERSION_STRING << std::endl;
+		std::cout << "Usage:\n\tmats [options]\n" << std::endl;
+		std::cout << desc << std::flush;
 
 		return 0;
 	} else if ( vm.count( "version" ) ) {
-		std::cout << "MATS - Minecraft Administrative Tools for Servers" << "\n"
-			<< "Version: v" VERSION_STRING "\nBuilt: " << buildTime() << std::endl;
+		std::cout << "MATS - Minecraft Administrative Tools for Servers\nVersion: v" VERSION_STRING "\nBuilt: " << buildTime() << std::endl;
 
 		return 0;
 	}

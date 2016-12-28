@@ -5,6 +5,7 @@
 #include <fstream>
 #include <libconfig.h++>
 #include <map>
+#include <memory>
 #include <pwd.h>
 #include <string>
 #include <typeindex>
@@ -16,6 +17,8 @@ namespace config {
 	static const fs::path confDir = ".mats/";
 	static const fs::path mainConf = "main.cfg";
 	static const fs::path serversConf = "servers.cfg";
+
+	extern libconfig::Setting* servers;
 
 	extern libconfig::Config config;
 	extern libconfig::Config serversConfig;
@@ -30,8 +33,11 @@ namespace config {
 	void createFileIfNotExists( const fs::path& path );
 
 	void loadClientConfigs();
+	void verifyServersConfig();
 	void safeServersConfig();
 
+	template<typename T>
+	extern void verifySetting( libconfig::Setting* root, const std::string& path, T defaultValue );
 	template<typename T>
 	extern T lookupWithDefault( const libconfig::Config& config, const std::string& path, T defaultValue );
 }

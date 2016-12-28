@@ -26,7 +26,9 @@ int Client::run() {
 bool Client::eulaCheck() {
 	LOG( TRACE ) << "Entered EULA check";
 
-	if ( !config::lookupWithDefault( config::serversConfig, "acceptedEula", false ) ) {
+	std::unique_ptr<libconfig::Setting> settingAcceptedEula( &config::serversConfig.lookup( "acceptedEula" ) );
+
+	if ( !*settingAcceptedEula ) {
 		LOG( INFO ) << "EULA not yet accepted! Asking user to accept it";
 
 		DialogYesNo dialogAcceptedEula( "Do you agree to the Minecraft EULA? (https://account.mojang.com/documents/minecraft_eula)" );
@@ -35,7 +37,7 @@ bool Client::eulaCheck() {
 		LOG( DEBUG ) << "User answered: " << dialogAcceptedEula.getResult();
 
 		if ( dialogAcceptedEula.getResult() == "Yes" ) {
-			config::config.lookup( "acceptedEula" ) = true;
+			*settingAcceptedEula = true;
 
 			config::safeServersConfig();
 		} else {

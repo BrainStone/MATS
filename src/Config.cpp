@@ -10,6 +10,8 @@ namespace config {
 		{ typeid(std::string), libconfig::Setting::TypeString }
 	} );
 
+	libconfig::Setting* servers;
+
 	libconfig::Config config;
 	libconfig::Config serversConfig;
 	libconfig::Config globalConfig;
@@ -69,12 +71,39 @@ namespace config {
 		createFileIfNotExists( getServersConf() );
 
 		config.readFile( getMainConf().string().c_str() );
-		serversConfig.readFile( getMainConf().string().c_str() );
+		serversConfig.readFile( getServersConf().string().c_str() );
 		globalConfig.readFile( getGlobalMainConf().string().c_str() );
+
+		verifyServersConfig();
+
+		servers = &serversConfig.lookup( "Servers" );
+	}
+
+	void verifyServersConfig() {
+		libconfig::Setting* root( &serversConfig.getRoot() );
+
+		verifySetting( root, "acceptedEula", false );
+
+		if ( !serversConfig.exists( "Servers" ) )
+			root->add( "Servers", libconfig::Setting::TypeArray );
+
+		safeServersConfig();
 	}
 
 	void safeServersConfig() {
-		serversConfig.writeFile( getMainConf().string().c_str() );
+		serversConfig.writeFile( getServersConf().string().c_str() );
+	}
+
+	template<typename T>
+	void verifySetting( libconfig::Setting* root, const std::string& path, T defaultValue ) {
+		libconfig::Setting::Type type = typeMapping.at( typeid(T) );
+
+		if ( !root->exists( path ) ) {
+			root->add( path, type ) = defaultValue;
+		} else if ( root->lookup( path ).getType() != type ) {
+			root->remove( path );
+			root->add( path, type ) = defaultValue;
+		}
 	}
 
 	template<typename T>
@@ -85,6 +114,13 @@ namespace config {
 
 		return defaultValue;
 	}
+
+	template void verifySetting<bool>( libconfig::Setting* root, const std::string& path, bool defaultValue );
+	template void verifySetting<int>( libconfig::Setting* root, const std::string& path, int defaultValue );
+	template void verifySetting<long long>( libconfig::Setting* root, const std::string& path, long long defaultValue );
+	template void verifySetting<float>( libconfig::Setting* root, const std::string& path, float defaultValue );
+	template void verifySetting<const char*>( libconfig::Setting* root, const std::string& path, const char* defaultValue );
+	template void verifySetting<std::string>( libconfig::Setting* root, const std::string& path, std::string defaultValue );
 
 	template bool lookupWithDefault<bool>( const libconfig::Config& config, const std::string& path, bool defaultValue );
 	template int lookupWithDefault<int>( const libconfig::Config& config, const std::string& path, int defaultValue );

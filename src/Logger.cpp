@@ -9,9 +9,8 @@ void initLogger( bool debug, int verbosity, bool deamon ) {
 	const std::string formatDetailed = "%datetime [%level] %fbase: %line [%func]: %msg";
 	const std::string deamonLog = "/deamon.log";
 	const std::string userLog = "/client-brainstone.log";
-	std::string logBasePath = "/var/log/mats";
+	std::string logBasePath = config::lookupWithDefault( config::globalConfig, "logPath", "/var/log/mats" );
 
-	config::globalConfig.lookupValue( "logPath", logBasePath );
 	el::Configurations defaultConf;
 	defaultConf.setToDefault();
 

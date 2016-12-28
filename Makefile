@@ -16,7 +16,7 @@ RCOMPILE_FLAGS = -D__NDEBUG__ -march=native -O3 -fdata-sections -ffunction-secti
 # Additional debug-specific flags
 DCOMPILE_FLAGS = -D__DEBUG__ -Og -g3
 # Add additional include paths
-INCLUDES = -I $(SRC_PATH) -I easyloggingpp/src
+INCLUDES = -I $(SRC_PATH)
 # General linker settings
 LINK_FLAGS = -lstdc++fs -lboost_program_options
 # Additional release-specific linker settings

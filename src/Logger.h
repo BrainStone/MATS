@@ -26,7 +26,7 @@
 
 #include "Config.h"
 // See https://github.com/easylogging/easyloggingpp for Doc
-#include "easylogging++.h"
+#include "../easyloggingpp/src/easylogging++.h"
 
 void initLogger( bool debug, int verbosity, bool deamon = false );
 std::string unixToHumanReadable( long timestamp );

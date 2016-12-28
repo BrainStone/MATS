@@ -68,6 +68,8 @@ int main( int argc, char* argv[] ) {
 		client();
 	} catch ( const NCursesException& e ) {
 		LOG( ERROR ) << typeid(e).name() << ": " << e.message;
+
+		return 1;
 	}
 
 	return 0;

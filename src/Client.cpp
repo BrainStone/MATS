@@ -15,9 +15,24 @@ void Client::title() {
 Client::Client() : NCursesApplication( true ) {}
 
 int Client::run() {
+	LOG( TRACE ) << "Entered Client application";
+
+	if ( !eulaCheck() )
+		return 1;
+
+	return 0;
+}
+
+bool Client::eulaCheck() {
+	LOG( TRACE ) << "Entered EULA check";
+
 	if ( !config::lookupWithDefault( "acceptedEula", false ) ) {
+		LOG( INFO ) << "EULA not yet accepted! Asking user to accept it";
+
 		DialogYesNo dialogAcceptedEula( "Do you agree to the Minecraft EULA? (https://account.mojang.com/documents/minecraft_eula)" );
 		dialogAcceptedEula();
+
+		LOG( DEBUG ) << "User answered: " << dialogAcceptedEula.getResult();
 
 		if ( dialogAcceptedEula.getResult() == "Yes" ) {
 			config::config.lookup( "acceptedEula" ) = true;
@@ -29,9 +44,13 @@ int Client::run() {
 			DialogOk dialogFailedEula( "You have to agree to the Minecraft EULA!" );
 			dialogFailedEula();
 
-			return 1;
+			LOG( WARNING ) << "EULA check failed!";
+
+			return false;
 		}
 	}
 
-	return 0;
+	LOG( TRACE ) << "EULA check succeeded";
+
+	return true;
 }

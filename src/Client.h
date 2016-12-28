@@ -15,6 +15,9 @@ public:
 	Client();
 
 	virtual int run();
+
+private:
+	bool eulaCheck();
 };
 
 #endif // #ifndef Client_H

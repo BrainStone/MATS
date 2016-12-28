@@ -44,7 +44,7 @@ void initLogger( bool debug, int verbosity, bool deamon ) {
 
 	el::Helpers::validateFileRolling( el::Loggers::getLogger( "default" ), el::Level::Global );
 
-	START_EASYLOGGINGPP( 0, new char*[0] );
+	START_EASYLOGGINGPP( 1, new char*[0] );
 }
 
 std::string unixToHumanReadable( long timestamp ) {

@@ -1,8 +1,6 @@
 #ifndef Client_H
 #define Client_H
 
-#include <memory>
-
 #include "Config.h"
 #include "curses++.h"
 #include "Dialog.h"

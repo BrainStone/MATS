@@ -26,7 +26,7 @@ int Client::run() {
 bool Client::eulaCheck() {
 	LOG( TRACE ) << "Entered EULA check";
 
-	std::unique_ptr<libconfig::Setting> settingAcceptedEula( &config::serversConfig.lookup( "acceptedEula" ) );
+	libconfig::Setting* settingAcceptedEula = &config::serversConfig.lookup( "acceptedEula" );
 
 	if ( !*settingAcceptedEula ) {
 		LOG( INFO ) << "EULA not yet accepted! Asking user to accept it";

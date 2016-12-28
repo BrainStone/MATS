@@ -5,7 +5,6 @@
 #include <fstream>
 #include <libconfig.h++>
 #include <map>
-#include <memory>
 #include <pwd.h>
 #include <string>
 #include <typeindex>

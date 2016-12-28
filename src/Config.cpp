@@ -80,7 +80,7 @@ namespace config {
 	}
 
 	void verifyServersConfig() {
-		libconfig::Setting* root( &serversConfig.getRoot() );
+		libconfig::Setting* root = &serversConfig.getRoot();
 
 		verifySetting( root, "acceptedEula", false );
 

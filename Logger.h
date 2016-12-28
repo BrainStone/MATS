@@ -14,7 +14,7 @@
 #endif
 
 // Compile options for easylogging++
-//#define ELPP_UNICODE
+#define ELPP_UNICODE
 #define ELIPP_THREAD_SAFE
 #define ELPP_DISABLE_PERFORMANCE_TRACKING
 #define ELPP_STACKTRACE_ON_CRASH

@@ -40,6 +40,8 @@ void initLogger( bool debug, int verbosity, bool deamon ) {
 	el::Loggers::setVerboseLevel( verbosity );
 
 	el::Helpers::validateFileRolling( el::Loggers::getLogger( "default" ), el::Level::Global );
+
+	START_EASYLOGGINGPP( 0, new char*[0] );
 }
 
 std::string unixToHumanReadable( long timestamp ) {

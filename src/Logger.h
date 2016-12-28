@@ -14,12 +14,12 @@
 #endif
 
 // Compile options for easylogging++
-#define ELPP_UNICODE
-#define ELIPP_THREAD_SAFE
 #define ELPP_DISABLE_PERFORMANCE_TRACKING
-#define ELPP_STACKTRACE_ON_CRASH
 #define ELPP_NO_DEFAULT_LOG_FILE
+#define ELPP_STACKTRACE_ON_CRASH
 #define ELPP_STL_LOGGING
+#define ELPP_THREAD_SAFE
+#define ELPP_UNICODE
 
 #include <string>
 #include <time.h>

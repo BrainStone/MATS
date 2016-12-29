@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # Make sure the user did not forget to update the submodules and they are at the correct version
-echo "Cloning all submodules"
+echo -e "\e[1mCloning all submodules\e[m"
 git submodule update --init --recursive
 git submodule sync --recursive
 
@@ -13,9 +13,9 @@ then
 fi
 
 # Make and install the program
-echo "Compiling..."
-make
-echo "Installing..."
+echo -e "\e[1mCompiling...\e[m"
+make release
+echo -e "\e[1mInstalling...\e[m"
 sudo make install
 
-echo -e "\nDone!"
+echo -e "\n\e[1mDone!\e[m\n"

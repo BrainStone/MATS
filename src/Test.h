@@ -1,3 +1,5 @@
+#pragma once
+
 #ifdef __cplusplus
 #define NCURSES_VOID		/* nothing */
 #else

@@ -1,5 +1,4 @@
-#ifndef Logger_H
-#define Logger_H
+#pragma once
 
 #define __DATE_TIME__ __DATE__ " " __TIME__
 
@@ -27,4 +26,3 @@
 #include "../easyloggingpp/src/easylogging++.h"
 
 void initLogger( bool debug, int verbosity, bool deamon = false );
-#endif // #ifndef Logger_H

@@ -1,5 +1,4 @@
-#ifndef Config_H
-#define Config_H
+#pragma once
 
 #include <experimental/filesystem>
 #include <fstream>
@@ -59,5 +58,3 @@ namespace config {
 		}
 	}
 }
-
-#endif // #ifndef Config_H

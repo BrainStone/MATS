@@ -1,5 +1,4 @@
-#ifndef cursesPP_H
-#define cursesPP_H
+#pragma once
 
 #define NCURSES_WIDECHAR 1
 
@@ -14,5 +13,3 @@ template<typename T>
 constexpr T CTRL( T x ) {
 	return x & 0x1f;
 }
-
-#endif // #ifndef cursesPP_H

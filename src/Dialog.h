@@ -1,5 +1,4 @@
-#ifndef Dialog_H
-#define Dialog_H
+#pragma once
 
 #include <algorithm>
 #include <string>
@@ -50,5 +49,3 @@ class DialogYesNo : public Dialog {
 public:
 	DialogYesNo( const std::string& text );
 };
-
-#endif // #ifndef Dialog_H

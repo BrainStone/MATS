@@ -1,5 +1,4 @@
-#ifndef Client_H
-#define Client_H
+#pragma once
 
 #include "Config.h"
 #include "curses++.h"
@@ -19,5 +18,3 @@ public:
 private:
 	bool eulaCheck();
 };
-
-#endif // #ifndef Client_H

@@ -8,7 +8,7 @@ git submodule sync --recursive
 if [ $# -eq 0 ] || [ "_$1" != "_-s" ]
 then
   # Install dependencies
-  echo "Installing all dependencies"
+  echo -e "\e[1mInstalling all dependencies\e[m"
   sudo apt-get install -y g++ libboost-all-dev libconfig++-dev libncursesw5-dev
 fi
 

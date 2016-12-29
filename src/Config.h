@@ -39,6 +39,25 @@ namespace config {
 	extern void verifySetting( libconfig::Setting* root, const std::string& path, T defaultValue );
 	template<typename T>
 	extern T lookupWithDefault( const libconfig::Config& config, const std::string& path, T defaultValue );
+
+	namespace settings {
+		typedef const char* label;
+
+		namespace client {
+		}
+
+		namespace servers {
+			static constexpr label accpetedEula = "acceptedEula";
+			static constexpr label servers = "servers";
+
+			namespace sever {
+			}
+		}
+
+		namespace global {
+			static constexpr label logPath = "logPath";
+		}
+	}
 }
 
 #endif // #ifndef Config_H

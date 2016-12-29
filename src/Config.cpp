@@ -76,16 +76,16 @@ namespace config {
 
 		verifyServersConfig();
 
-		servers = &serversConfig.lookup( "Servers" );
+		servers = &serversConfig.lookup( settings::servers::servers );
 	}
 
 	void verifyServersConfig() {
 		libconfig::Setting* root = &serversConfig.getRoot();
 
-		verifySetting( root, "acceptedEula", false );
+		verifySetting( root, settings::servers::accpetedEula, false );
 
-		if ( !serversConfig.exists( "Servers" ) )
-			root->add( "Servers", libconfig::Setting::TypeArray );
+		if ( !serversConfig.exists( settings::servers::servers ) )
+			root->add( settings::servers::servers, libconfig::Setting::TypeArray );
 
 		safeServersConfig();
 	}

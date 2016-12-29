@@ -6,7 +6,7 @@ namespace config {
 		{ typeid(int), libconfig::Setting::TypeInt },
 		{ typeid(long long), libconfig::Setting::TypeInt64 },
 		{ typeid(float), libconfig::Setting::TypeFloat },
-		{ typeid(char*), libconfig::Setting::TypeString },
+		{ typeid(const char*), libconfig::Setting::TypeString },
 		{ typeid(std::string), libconfig::Setting::TypeString }
 	} );
 
@@ -62,32 +62,81 @@ namespace config {
 	}
 
 	void loadClientConfigs() {
-		if ( !fs::exists( getConfigDir() ) ) {
-			fs::create_directories( getConfigDir() );
-			fs::permissions( getConfigDir(), fs::perms::owner_all );
+		try {
+			if ( !fs::exists( getConfigDir() ) ) {
+				fs::create_directories( getConfigDir() );
+				fs::permissions( getConfigDir(), fs::perms::owner_all );
+			}
+
+			createFileIfNotExists( getMainConf() );
+			createFileIfNotExists( getServersConf() );
+
+			config.readFile( getMainConf().string().c_str() );
+			serversConfig.readFile( getServersConf().string().c_str() );
+			globalConfig.readFile( getGlobalMainConf().string().c_str() );
+
+			verifyServersConfig();
+			verifyGlobalConfig();
+
+			servers = &serversConfig.lookup( settings::servers::servers );
+		} catch ( const libconfig::ParseException& e ) {
+			std::cerr << "Error reading config!" << std::endl;
+			std::cerr << e.getError() << " in file \"" << e.getFile() << "\" on line " << e.getFile();
+
+			std::exit( 1 );
+		} catch ( const libconfig::SettingNotFoundException& e ) {
+			std::cerr << "Error reading config!" << std::endl;
+			std::cerr << "Could not find setting: \"" << e.getPath() << '"' << std::endl;
+
+			std::exit( 1 );
+		} catch ( const libconfig::SettingTypeException& e ) {
+			std::cerr << "Error reading config!" << std::endl;
+			std::cerr << "Wrong setting type for: \"" << e.getPath() << '"' << std::endl;
+
+			std::exit( 1 );
 		}
-
-		createFileIfNotExists( getMainConf() );
-		createFileIfNotExists( getServersConf() );
-
-		config.readFile( getMainConf().string().c_str() );
-		serversConfig.readFile( getServersConf().string().c_str() );
-		globalConfig.readFile( getGlobalMainConf().string().c_str() );
-
-		verifyServersConfig();
-
-		servers = &serversConfig.lookup( settings::servers::servers );
 	}
 
 	void verifyServersConfig() {
-		libconfig::Setting* root = &serversConfig.getRoot();
+		libconfig::Setting& root = serversConfig.getRoot();
 
 		verifySetting( root, settings::servers::accpetedEula, false );
 
 		if ( !serversConfig.exists( settings::servers::servers ) )
-			root->add( settings::servers::servers, libconfig::Setting::TypeArray );
+			root.add( settings::servers::servers, libconfig::Setting::TypeList );
+
+		libconfig::Setting& servers = serversConfig.lookup( settings::servers::servers );
+		std::stack<int> indicesToDelete;
+
+		for ( libconfig::Setting& server : servers )
+			if ( !verifyServerBlock( server ) )
+				indicesToDelete.push( server.getIndex() );
+
+		while ( !indicesToDelete.empty() ) {
+			servers.remove( indicesToDelete.top() );
+			indicesToDelete.pop();
+		}
 
 		safeServersConfig();
+	}
+
+	bool verifyServerBlock( libconfig::Setting& server ) {
+		if ( !server.isGroup() )
+			return false;
+
+		verifySetting( server, settings::servers::sever::severPath, "~/server" );
+		verifySetting( server, settings::servers::sever::severName, "Server" );
+		verifySetting( server, settings::servers::sever::maxRam, 1024 );
+		verifySetting( server, settings::servers::sever::minRam, 0 );
+		verifySetting( server, settings::servers::sever::jarPath, "minecraft.jar" );
+
+		return true;
+	}
+
+	void verifyGlobalConfig() {
+		libconfig::Setting& root = globalConfig.getRoot();
+
+		verifySetting( root, settings::global::logPath, "/var/log/mats" );
 	}
 
 	void safeServersConfig() {
@@ -95,37 +144,21 @@ namespace config {
 	}
 
 	template<typename T>
-	void verifySetting( libconfig::Setting* root, const std::string& path, T defaultValue ) {
+	void verifySetting( libconfig::Setting& root, const std::string& path, T defaultValue ) {
 		libconfig::Setting::Type type = typeMapping.at( typeid(T) );
 
-		if ( !root->exists( path ) ) {
-			root->add( path, type ) = defaultValue;
-		} else if ( root->lookup( path ).getType() != type ) {
-			root->remove( path );
-			root->add( path, type ) = defaultValue;
+		if ( !root.exists( path ) ) {
+			root.add( path, type ) = defaultValue;
+		} else if ( root.lookup( path ).getType() != type ) {
+			root.remove( path );
+			root.add( path, type ) = defaultValue;
 		}
 	}
 
-	template<typename T>
-	T lookupWithDefault( const libconfig::Config& config, const std::string& path, T defaultValue ) {
-		if ( !config.lookupValue( path, defaultValue ) ) {
-			config.getRoot().add( path, typeMapping.at( typeid(T) ) ) = defaultValue;
-		}
-
-		return defaultValue;
-	}
-
-	template void verifySetting<bool>( libconfig::Setting* root, const std::string& path, bool defaultValue );
-	template void verifySetting<int>( libconfig::Setting* root, const std::string& path, int defaultValue );
-	template void verifySetting<long long>( libconfig::Setting* root, const std::string& path, long long defaultValue );
-	template void verifySetting<float>( libconfig::Setting* root, const std::string& path, float defaultValue );
-	template void verifySetting<const char*>( libconfig::Setting* root, const std::string& path, const char* defaultValue );
-	template void verifySetting<std::string>( libconfig::Setting* root, const std::string& path, std::string defaultValue );
-
-	template bool lookupWithDefault<bool>( const libconfig::Config& config, const std::string& path, bool defaultValue );
-	template int lookupWithDefault<int>( const libconfig::Config& config, const std::string& path, int defaultValue );
-	template long long lookupWithDefault<long long>( const libconfig::Config& config, const std::string& path, long long defaultValue );
-	template float lookupWithDefault<float>( const libconfig::Config& config, const std::string& path, float defaultValue );
-	template const char* lookupWithDefault<const char*>( const libconfig::Config& config, const std::string& path, const char* defaultValue );
-	template std::string lookupWithDefault<std::string>( const libconfig::Config& config, const std::string& path, std::string defaultValue );
+	template void verifySetting<bool>( libconfig::Setting& root, const std::string& path, bool defaultValue );
+	template void verifySetting<int>( libconfig::Setting& root, const std::string& path, int defaultValue );
+	template void verifySetting<long long>( libconfig::Setting& root, const std::string& path, long long defaultValue );
+	template void verifySetting<float>( libconfig::Setting& root, const std::string& path, float defaultValue );
+	template void verifySetting<const char*>( libconfig::Setting& root, const std::string& path, const char* defaultValue );
+	template void verifySetting<std::string>( libconfig::Setting& root, const std::string& path, std::string defaultValue );
 }

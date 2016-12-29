@@ -2,9 +2,11 @@
 
 #include <experimental/filesystem>
 #include <fstream>
+#include <iostream>
 #include <libconfig.h++>
 #include <map>
 #include <pwd.h>
+#include <stack>
 #include <string>
 #include <typeindex>
 #include <unistd.h>
@@ -32,12 +34,12 @@ namespace config {
 
 	void loadClientConfigs();
 	void verifyServersConfig();
+	bool verifyServerBlock( libconfig::Setting& server );
+	void verifyGlobalConfig();
 	void safeServersConfig();
 
 	template<typename T>
-	extern void verifySetting( libconfig::Setting* root, const std::string& path, T defaultValue );
-	template<typename T>
-	extern T lookupWithDefault( const libconfig::Config& config, const std::string& path, T defaultValue );
+	extern void verifySetting( libconfig::Setting& root, const std::string& path, T defaultValue );
 
 	namespace settings {
 		typedef const char* label;
@@ -50,6 +52,11 @@ namespace config {
 			static constexpr label servers = "servers";
 
 			namespace sever {
+				static constexpr label severPath = "severPath";
+				static constexpr label severName = "severName";
+				static constexpr label maxRam = "maxRam";
+				static constexpr label minRam = "minRam";
+				static constexpr label jarPath = "jarPath";
 			}
 		}
 

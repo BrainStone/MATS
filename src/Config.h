@@ -6,7 +6,6 @@
 #include <libconfig.h++>
 #include <map>
 #include <pwd.h>
-#include <stack>
 #include <string>
 #include <typeindex>
 #include <unistd.h>

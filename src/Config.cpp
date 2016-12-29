@@ -106,16 +106,10 @@ namespace config {
 			root.add( settings::servers::servers, libconfig::Setting::TypeList );
 
 		libconfig::Setting& servers = serversConfig.lookup( settings::servers::servers );
-		std::stack<int> indicesToDelete;
 
-		for ( libconfig::Setting& server : servers )
-			if ( !verifyServerBlock( server ) )
-				indicesToDelete.push( server.getIndex() );
-
-		while ( !indicesToDelete.empty() ) {
-			servers.remove( indicesToDelete.top() );
-			indicesToDelete.pop();
-		}
+		for ( int i = servers.getLength() - 1; i >= 0; i-- )
+			if ( !verifyServerBlock( servers[i] ) )
+				servers.remove( i );
 
 		safeServersConfig();
 	}

@@ -1,8 +1,9 @@
 #! /bin/bash
 
-# Make sure the user did not forget to update the submodules
+# Make sure the user did not forget to update the submodules and they are at the correct version
 echo "Cloning all submodules"
 git submodule update --init --recursive
+git submodule sync --recursive
 
 if [ $# -eq 0 ] || [ "_$1" != "_-s" ]
 then

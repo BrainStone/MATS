@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# Change directory to directory of the script so that make and git commands work
+cd "$(dirname "$0")"
+
 # Make sure the user did not forget to update the submodules and they are at the correct version
 echo -e "\e[1mCloning all submodules\n----------------------\e[m"
 git submodule update --init --recursive

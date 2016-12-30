@@ -149,6 +149,21 @@ namespace config {
 		}
 	}
 
+	libconfig::Setting& getServer( size_t index ) {
+		return (*servers)[index];
+	}
+
+	libconfig::Setting& addServer() {
+		libconfig::Setting& server = servers->add( libconfig::Setting::TypeGroup );
+		verifyServerBlock( server );
+
+		return server;
+	}
+
+	void removeServer( size_t index ) {
+		servers->remove( index );
+	}
+
 	template void verifySetting<bool>( libconfig::Setting& root, const std::string& path, bool defaultValue );
 	template void verifySetting<int>( libconfig::Setting& root, const std::string& path, int defaultValue );
 	template void verifySetting<long long>( libconfig::Setting& root, const std::string& path, long long defaultValue );

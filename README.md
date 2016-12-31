@@ -31,16 +31,16 @@ Depending on how confident you feel with your skills on the command line follow 
 
 So if you are reading this I assume you are familiar with the standard command line tools and your operating system in general.
 
-First of all, this repo has submodules so be sure to clone it recursively (with the `--recursive` flag). Should you by accident have forgotten to do this just
-run the following two commands and you are good to go!
+First of all, verify that you have all the necessary tools, libararies and packages installed (See command below for package list). Simply run this
+command if you are not sure:
+
+    sudo apt-get install -y sudo git g++ make libboost-program-options-dev libboost-filesystem-dev libconfig++-dev libncurses5-dev libncursesw5-dev
+
+After you verified the existence of all necessary tools, clone the repo. This repo has submodules so be sure to clone it recursively (with the `--recursive`
+flag). Should you by accident have forgotten to do this just run the following two commands and you are good to go!
 
     git submodule update --init --recursive
     git submodule sync --recursive
-
-After you cloned the repo verify that you have all the necessary tools, libararies and packages installed (See command below for package list). Simply run this
-command if you are not sure:
-
-    sudo apt-get install -y g++ make libboost-program-options-dev libconfig++-dev libncurses5-dev libncursesw5-dev
 
 After that it's just a matter of compiling. Nothing out of the ordinary. Just run:
 

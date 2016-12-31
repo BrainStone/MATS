@@ -12,7 +12,7 @@ if [ $# -eq 0 ] || [ "_$1" != "_-s" ]
 then
   # Install dependencies
   echo -e "\n\e[1mInstalling all required dependencies\n------------------------------------\e[m"
-  sudo apt-get install -y g++ libboost-all-dev libconfig++-dev libncurses5-dev libncursesw5-dev
+  sudo apt-get install -y g++ libboost-program-options-dev libconfig++-dev libncurses5-dev libncursesw5-dev
 fi
 
 # Make and install the program

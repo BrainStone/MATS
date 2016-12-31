@@ -20,6 +20,7 @@ There are no precompiled binaries available so you have to compile it yourself. 
     # Make and install the program
     ./install.sh
 
-`./install.sh` can be called with the parameter `-s` (for skip) to skip trying to install the dependencies.
+`./install.sh` can be called with the parameter `-s` (for skip) to skip trying to install the dependencies.  
+*(Also make sure you have `sudo` and `git` installed! Everything else you need will be installed automatically!)
 
 After that you should be able to call the program `mats`.

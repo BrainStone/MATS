@@ -10,7 +10,7 @@ SRC_PATH = src
 # Space-separated pkg-config libraries used by this project
 LIBS = ncursesw ncurses++w formw menuw tic panelw libconfig++
 # General compiler flags
-COMPILE_FLAGS = -std=c++14 -Wall -Wextra -Wpedantic
+COMPILE_FLAGS = -std=c++11 -Wall -Wextra -Wpedantic
 # Additional release-specific flags
 RCOMPILE_FLAGS = -D__NDEBUG__ -march=native -O3 -fdata-sections -ffunction-sections -g0
 # Additional debug-specific flags
@@ -18,7 +18,7 @@ DCOMPILE_FLAGS = -D__DEBUG__ -Og -g3
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH)
 # General linker settings
-LINK_FLAGS = -lstdc++fs -lboost_program_options
+LINK_FLAGS = -lstdc++fs -lboost_program_options -lboost_filesystem -lboost_system
 # Additional release-specific linker settings
 RLINK_FLAGS = -Wl,--gc-sections -fopenmp
 # Additional debug-specific linker settings

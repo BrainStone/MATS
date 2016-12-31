@@ -58,7 +58,7 @@ namespace config {
 		fs::create_directories( path.parent_path() );
 
 		if ( !fs::exists( path ) )
-			std::ofstream().open( path );
+			std::ofstream().open( path.string() );
 	}
 
 	void loadClientConfigs() {

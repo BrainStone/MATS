@@ -1,6 +1,6 @@
 #pragma once
 
-#include <experimental/filesystem>
+#include <boost/filesystem.hpp>
 #include <fstream>
 #include <iostream>
 #include <libconfig.h++>
@@ -11,7 +11,7 @@
 #include <unistd.h>
 
 namespace config {
-	namespace fs = std::experimental::filesystem;
+	namespace fs = boost::filesystem;
 
 	static const fs::path confDir = ".mats/";
 	static const fs::path mainConf = "main.cfg";

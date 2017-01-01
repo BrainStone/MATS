@@ -6,6 +6,14 @@ void Dialog::centerString( NCursesPanel& panel, int row, const std::string& text
 	panel.addstr( row, std::max<int>( (panel.maxx() - size + 1) / 2, 0 ), text.c_str(), size );
 }
 
+constexpr chtype Dialog::getActiveColor() {
+	return COLOR_PAIR( 6 );
+}
+
+constexpr chtype Dialog::getInactiveColor() {
+	return COLOR_PAIR( 2 );
+}
+
 Dialog::DialogItem::DialogItem( const std::string& text, Dialog& dialog ) :
 	NCursesMenuItem( text.c_str() ),
 	text( text ),
@@ -60,7 +68,7 @@ Dialog::Dialog( const std::string& title, const std::vector<std::string>& option
 
 		centerString( *tmpPanel, 1, option );
 		tmpPanel->frame();
-		tmpPanel->bkgd( COLOR_PAIR( 1 ) );
+		tmpPanel->bkgd( getInactiveColor() );
 		tmpPanel->overlay( mainPanel );
 
 		itemPanels.push_back( *tmpPanel );
@@ -88,12 +96,12 @@ void Dialog::On_Menu_Termination() {
 }
 
 void Dialog::On_Item_Init( NCursesMenuItem& item ) {
-	itemPanels.at( item.index() ).bkgd( COLOR_PAIR( 1 ) );
+	itemPanels.at( item.index() ).bkgd( getActiveColor() );
 	mainPanel.refresh();
 }
 
 void Dialog::On_Item_Termination( NCursesMenuItem& item ) {
-	itemPanels.at( item.index() ).bkgd( COLOR_PAIR( 2 ) );
+	itemPanels.at( item.index() ).bkgd( getInactiveColor() );
 	mainPanel.refresh();
 }
 
@@ -113,7 +121,7 @@ int Dialog::virtualize( int c ) {
 		// Previous
 	case KEY_LEFT:
 	case KEY_UP:
-	case CTRL( 'P' ):	
+	case CTRL( 'P' ):
 		return(REQ_PREV_ITEM);
 		// Enter
 	case CTRL( 'J' ):

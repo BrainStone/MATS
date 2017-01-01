@@ -15,6 +15,8 @@ private:
 	NCursesMenuItem** menuItems;
 
 	static void centerString( NCursesPanel& panel, int row, const std::string& text );
+	static constexpr chtype getActiveColor();
+	static constexpr chtype getInactiveColor();
 
 	class DialogItem : public NCursesMenuItem {
 	private:

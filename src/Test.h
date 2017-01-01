@@ -277,7 +277,7 @@ public:
 
 const char* TestForm::weekdays[] = {
 	"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
-	"Friday", "Saturday", NULL };
+	"Friday", "Saturday", nullptr };
 //
 // -------------------------------------------------------------------------
 //
@@ -350,7 +350,7 @@ public:
 			}
 		}
 
-		P.label( "Pad Demo", NULL );
+		P.label( "Pad Demo", nullptr );
 		FP();
 		P.clear();
 		return FALSE;

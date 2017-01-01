@@ -21,13 +21,13 @@ namespace config {
 
 		dirPointer = getenv( "MATS_HOME" );
 
-		if ( dirPointer == NULL ) {
+		if ( dirPointer == nullptr ) {
 			dirPointer = getenv( "XDG_CONFIG_HOME" );
 
-			if ( dirPointer == NULL ) {
+			if ( dirPointer == nullptr ) {
 				dirPointer = getenv( "HOME" );
 
-				if ( dirPointer == NULL ) {
+				if ( dirPointer == nullptr ) {
 					dirPointer = getpwuid( getuid() )->pw_dir;
 				}
 			}

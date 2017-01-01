@@ -23,6 +23,9 @@ then
     tar xzf "libconfig-1.5.tar.gz"
     cd "libconfig-1.5"
     
+    # Remove old so files
+    find / -regextype posix-extended -regex '.*/libconfig(\+\+)?\.so(\.9)?' -delete
+    
     ./configure
     make
     make test

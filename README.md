@@ -25,6 +25,7 @@ Depending on how confident you feel with your skills on the command line follow 
     ./install.sh
 
 `./install.sh` can be called with the parameter `-s` (for skip) to skip trying to install the dependencies.  
+`./install.sh` can be called with the parameter `-l` (for libconfig) to skip trying to install the libconfig 1.5 should it be not present.
 *(Also make sure you have `sudo` and `git` installed! Everything else you need will be installed automatically!)*
 
 ### Advanced guide

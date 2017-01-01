@@ -17,8 +17,8 @@ then
   # Install libconfig 1.5 if it is not already installed and the -l flag is not specified
   if [ $# -eq 0 ] || [ "_$1" != "_-l" ]
   then
-    # Compile a program that returns 0 when the libconfig++ version is above or equal to 1.5 and 1 otherwise 
-    echo -e "#include <libconfig.h++>\nint main(){return(LIBCONFIGXX_VER_MAJOR!=1||LIBCONFIGXX_VER_MINOR<5)&&LIBCONFIGXX_VER_MAJOR<=1;}" | g++ $(pkg-config --cflags --libs libconfig++) -ox -xc++ -
+    # Compile a program that returns 1 when the libconfig++ version is above or equal to 1.5 and 0 otherwise 
+    echo -e "#include <libconfig.h++>\nint main(){return(LIBCONFIGXX_VER_MAJOR==1&&LIBCONFIGXX_VER_MINOR>=5)||LIBCONFIGXX_VER_MAJOR>1;}" | g++ $(pkg-config --cflags --libs libconfig++) -ox -xc++ -
 
     if ./x
     then

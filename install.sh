@@ -17,8 +17,10 @@ then
   # Install libconfig 1.5 if it is not already installed and the -l flag is not specified
   if ([ $# -eq 0 ] || [ "_$1" != "_-l" ]) && [ -z "$(find / -name "libconfig++.so.9.2.*" 2> /dev/null)" ]
   then
+    echo -e "\n\e[1mInstalling libconfig\n--------------------\e[m"
+    
     wget "http://www.hyperrealm.com/libconfig/libconfig-1.5.tar.gz"
-    tar xzf libconfig-1.5.tar.gz
+    tar xzf "libconfig-1.5.tar.gz"
     cd "libconfig-1.5"
     
     ./configure
@@ -27,7 +29,7 @@ then
     sudo make install
     
     cd ..
-    rm -rf "libconfig-1.5*""
+    rm -rf "libconfig-1.5*"
   fi
 fi
 

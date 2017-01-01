@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -e
 
 # Change directory to directory of the script so that make and git commands work
 cd "$(dirname "$0")"

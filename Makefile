@@ -18,7 +18,7 @@ DCOMPILE_FLAGS = -D__DEBUG__ -Og -g3
 # Add additional include paths
 INCLUDES = -I $(SRC_PATH)
 # General linker settings
-LINK_FLAGS = -lstdc++fs -lboost_program_options -lboost_filesystem -lboost_system
+LINK_FLAGS = -lboost_program_options -lboost_filesystem -lboost_system
 # Additional release-specific linker settings
 RLINK_FLAGS = -Wl,--gc-sections -fopenmp
 # Additional debug-specific linker settings

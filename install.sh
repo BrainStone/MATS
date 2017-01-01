@@ -15,21 +15,29 @@ then
   sudo apt-get install -y g++ make libboost-program-options-dev libboost-filesystem-dev libconfig++-dev libncurses5-dev libncursesw5-dev
   
   # Install libconfig 1.5 if it is not already installed and the -l flag is not specified
-  if ([ $# -eq 0 ] || [ "_$1" != "_-l" ]) && [ -z "$(find / -name "libconfig++.so.9.2.*" 2> /dev/null)" ]
+  if [ $# -eq 0 ] || [ "_$1" != "_-l" ]
   then
-    echo -e "\n\e[1mInstalling libconfig\n--------------------\e[m"
+    # Compile a program that returns 0 when the libconfig++ version is above or equal to 1.5 and 1 otherwise 
+    echo -e "#include <libconfig.h++>\nint main(){return(LIBCONFIGXX_VER_MAJOR!=1||LIBCONFIGXX_VER_MINOR<5)&&LIBCONFIGXX_VER_MAJOR<=1;}" | g++ $(pkg-config --cflags --libs libconfig++) -ox -xc++ -
+
+    if ./x
+    then
+      echo -e "\n\e[1mInstalling libconfig\n--------------------\e[m"
+
+      wget "http://www.hyperrealm.com/libconfig/libconfig-1.5.tar.gz"
+      tar xzf "libconfig-1.5.tar.gz"
+      cd "libconfig-1.5"
+
+      ./configure --libdir="$(dirname $(find / -name "libconfig++.so.9" 2> /dev/null | head -n1))"
+      make
+      make test
+      sudo make install
+
+      cd ..
+      rm -rf libconfig-1.5*
+    fi
     
-    wget "http://www.hyperrealm.com/libconfig/libconfig-1.5.tar.gz"
-    tar xzf "libconfig-1.5.tar.gz"
-    cd "libconfig-1.5"
-    
-    ./configure --libdir="$(dirname $(find / -name "libconfig++.so.9" 2> /dev/null | head -n1))"
-    make
-    make test
-    sudo make install
-    
-    cd ..
-    rm -rf libconfig-1.5*
+    rm x
   fi
 fi
 

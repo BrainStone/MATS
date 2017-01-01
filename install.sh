@@ -29,7 +29,7 @@ then
     sudo make install
     
     cd ..
-    rm -rf "libconfig-1.5*"
+    rm -rf libconfig-1.5*
   fi
 fi
 

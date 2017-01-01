@@ -88,17 +88,17 @@ void Dialog::On_Menu_Termination() {
 }
 
 void Dialog::On_Item_Init( NCursesMenuItem& item ) {
-	itemPanels.at( item.index() ).bkgd( COLOR_PAIR( 2 ) );
-	mainPanel.refresh();
-}
-
-void Dialog::On_Item_Termination( NCursesMenuItem& item ) {
 	itemPanels.at( item.index() ).bkgd( COLOR_PAIR( 1 ) );
 	mainPanel.refresh();
 }
 
-static const int CMD_QUIT = MAX_COMMAND + 1;
-static const int CMD_ACTION = MAX_COMMAND + 2;
+void Dialog::On_Item_Termination( NCursesMenuItem& item ) {
+	itemPanels.at( item.index() ).bkgd( COLOR_PAIR( 2 ) );
+	mainPanel.refresh();
+}
+
+static constexpr int CMD_QUIT = MAX_COMMAND + 1;
+static constexpr int CMD_ACTION = MAX_COMMAND + 2;
 
 int Dialog::virtualize( int c ) {
 	switch ( c ) {

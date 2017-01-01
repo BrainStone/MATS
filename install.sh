@@ -23,7 +23,7 @@ then
     tar xzf "libconfig-1.5.tar.gz"
     cd "libconfig-1.5"
     
-    ./configure --libdir="$(dirname $(find / -name "libconfig++.so.9" 2> /dev/null | head -n1 | dirname))"
+    ./configure --libdir="$(dirname $(find / -name "libconfig++.so.9" 2> /dev/null | head -n1))"
     make
     make test
     sudo make install

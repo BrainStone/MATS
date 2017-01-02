@@ -77,6 +77,6 @@ std::vector<std::string> Server::getNames() {
 Server::Server( libconfig::Setting& setting ) :
 	setting( setting ) {}
 
-const std::string& Server::getName() const {
+std::string Server::getName() const {
 	return setting.lookup( config::settings::servers::sever::serverName );
 }

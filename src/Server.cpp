@@ -71,6 +71,9 @@ std::vector<std::string> Server::getNames() {
 		names.push_back( server.first );
 	}
 
+	LOG( INFO ) << servers;
+	LOG( INFO ) << names;
+
 	return names;
 }
 

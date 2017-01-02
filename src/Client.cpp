@@ -1,5 +1,28 @@
 #include "Client.h"
 
+ServerItem::ServerItem( const std::string& name ) :
+	BaseMenuItem( name ) {}
+
+NewServerItem::NewServerItem() :
+	BaseMenuItem( "Add Server" ) {}
+
+ServerMenu::ServerMenu() :
+	NCursesMenu( lines(), cols() / 3 ) {
+	const size_t size = Server::size();
+	size_t i = 0;
+	items = new NCursesMenuItem*[size + 3];
+
+	for ( const std::string& serverName : Server::getNames() ) {
+		items[i++] = new ServerItem( serverName );
+	}
+
+	items[size] = new NewServerItem();
+	items[size + 1] = new ExitItem();
+	items[size + 2] = new NCursesMenuItem();
+
+	InitMenu( items, false, true );
+}
+
 int Client::titlesize() const {
 	return 1;
 }
@@ -19,6 +42,9 @@ int Client::run() {
 
 	if ( !eulaCheck() )
 		return 1;
+
+	ServerMenu menu;
+	menu();
 
 	return 0;
 }

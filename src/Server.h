@@ -2,11 +2,13 @@
 
 #include <libconfig.h++>
 #include <map>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 #include "Config.h"
+#include "Logger.h"
 
 class Server {
 private:
@@ -33,4 +35,19 @@ public:
 	Server( libconfig::Setting& setting );
 
 	const std::string& getName() const;
+
+	inline operator std::string() {
+		return setting.getPath();
+	}
+
+	friend std::wstringstream& operator<<( std::wstringstream& os, const Server& obj );
 };
+
+inline std::wstringstream& operator<<( std::wstringstream& os, const Server& obj ) {
+	std::string test = obj.setting.getPath();
+	std::wstring str( test.begin(), test.end() );
+
+	os << str;
+
+	return os;
+}

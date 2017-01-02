@@ -171,14 +171,6 @@ public:
 template class MyAction<UserData>;
 template class NCURSES_IMPEXP NCursesUserItem<UserData>;
 
-class QuitItem : public NCursesMenuItem {
-public:
-	QuitItem() : NCursesMenuItem( "Quit" ) {}
-
-	bool action() {
-		return TRUE;
-	}
-};
 //
 // -------------------------------------------------------------------------
 //
@@ -360,16 +352,6 @@ public:
 //
 // -------------------------------------------------------------------------
 //
-class PassiveItem : public NCursesMenuItem {
-public:
-	PassiveItem( const char* text ) : NCursesMenuItem( text ) {
-		options_off( O_SELECTABLE );
-	}
-};
-
-//
-// -------------------------------------------------------------------------
-//
 class ScanAction : public NCursesMenuItem {
 public:
 	ScanAction( const char* s ) : NCursesMenuItem( s ) {}
@@ -429,7 +411,7 @@ public:
 		I[3] = new FormAction( "Form" );
 		I[4] = new PadAction( "Pad" );
 		I[5] = new ScanAction( "Scan" );
-		I[6] = new QuitItem();
+		I[6] = new ExitItem();
 		I[7] = new NCursesMenuItem(); // Terminating empty item
 
 		InitMenu( I, TRUE, TRUE );

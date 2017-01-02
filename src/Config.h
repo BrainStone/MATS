@@ -55,11 +55,18 @@ namespace config {
 			static constexpr label servers = "servers";
 
 			namespace sever {
-				static constexpr label severPath = "severPath";
 				static constexpr label severName = "severName";
+				static constexpr label severPath = "severPath";
+				static constexpr label jarPath = "jarPath";
+				static constexpr label address = "address";
+				static constexpr label port = "port";
+				static constexpr label slots = "slots";
 				static constexpr label maxRam = "maxRam";
 				static constexpr label minRam = "minRam";
-				static constexpr label jarPath = "jarPath";
+				static constexpr label startParams = "startParams";
+				static constexpr label javaParams = "javaParams";
+				static constexpr label autoRestart = "autoRestart";
+				static constexpr label autoBackup = "autoBackup";
 			}
 		}
 

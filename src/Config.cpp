@@ -118,11 +118,18 @@ namespace config {
 		if ( !server.isGroup() )
 			return false;
 
-		verifySetting( server, settings::servers::sever::severPath, "~/server" );
 		verifySetting( server, settings::servers::sever::severName, "Server" );
+		verifySetting( server, settings::servers::sever::severPath, "~/server" );
+		verifySetting( server, settings::servers::sever::jarPath, "minecraft.jar" );
+		verifySetting( server, settings::servers::sever::address, "" );
+		verifySetting( server, settings::servers::sever::port, 25565 );
+		verifySetting( server, settings::servers::sever::slots, 20 );
 		verifySetting( server, settings::servers::sever::maxRam, 1024 );
 		verifySetting( server, settings::servers::sever::minRam, 0 );
-		verifySetting( server, settings::servers::sever::jarPath, "minecraft.jar" );
+		verifySetting( server, settings::servers::sever::startParams, "" );
+		verifySetting( server, settings::servers::sever::javaParams, "" );
+		verifySetting( server, settings::servers::sever::autoRestart, 0 );
+		verifySetting( server, settings::servers::sever::autoBackup, 0 );
 
 		return true;
 	}

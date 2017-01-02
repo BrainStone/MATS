@@ -28,7 +28,7 @@ void Server::initalizeServers() {
 	serversMapType::iterator end = servers.end();
 
 	for ( libconfig::Setting& server : *config::servers ) {
-		name = server.lookup( config::settings::servers::sever::severName ).operator std::string();
+		name = server.lookup( config::settings::servers::sever::serverName ).operator std::string();
 
 		if ( servers.find( name ) != end )
 			throw std::runtime_error( "Duplicate server \"" + name + "\"!" );
@@ -46,7 +46,7 @@ Server& Server::addServer() {
 	std::string newName = getNextServerName();
 
 	config::verifyServerBlock( newServer );
-	newServer.lookup( config::settings::servers::sever::severName ) = newName;
+	newServer.lookup( config::settings::servers::sever::serverName ) = newName;
 
 	config::safeServersConfig();
 
@@ -78,5 +78,5 @@ Server::Server( libconfig::Setting& setting ) :
 	setting( setting ) {}
 
 const std::string& Server::getName() const {
-	return setting.lookup( config::settings::servers::sever::severName );
+	return setting.lookup( config::settings::servers::sever::serverName );
 }

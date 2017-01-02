@@ -53,8 +53,8 @@ namespace config {
 			static constexpr label servers = "servers";
 
 			namespace sever {
-				static constexpr label severName = "severName";
-				static constexpr label severPath = "severPath";
+				static constexpr label serverName = "serverName";
+				static constexpr label serverPath = "serverPath";
 				static constexpr label jarPath = "jarPath";
 				static constexpr label address = "address";
 				static constexpr label port = "port";

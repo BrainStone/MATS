@@ -120,8 +120,8 @@ namespace config {
 		if ( !server.isGroup() )
 			return false;
 
-		verifySetting( server, settings::servers::sever::severName, "Server" );
-		verifySetting( server, settings::servers::sever::severPath, "~/server" );
+		verifySetting( server, settings::servers::sever::serverName, "Server" );
+		verifySetting( server, settings::servers::sever::serverPath, "~/server" );
 		verifySetting( server, settings::servers::sever::jarPath, "minecraft.jar" );
 		verifySetting( server, settings::servers::sever::address, "" );
 		verifySetting( server, settings::servers::sever::port, 25565 );

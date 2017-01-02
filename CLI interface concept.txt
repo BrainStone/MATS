@@ -1,0 +1,28 @@
+<> = mandatory
+[] = optional
+() = comment
+
+
+mcserver
+    |- create <servername> [-i IP] [-p Port] [-s Slots] [-Xmx RAM in MiB] [-Xms RAM in MiB] [-c "optional start parameters"] [-j "optionale java parameters"]
+    |- start <servername|ID>
+    |- stop <servername|ID>
+    |- autostart <servername|ID> <on|off>
+    |- restart <servername|ID> (restarts immediately)
+    |- autorestart <servername|ID> <on|off> [h|d|W|M] [value] (h = hour, d = day, W = week, M = month| mcserver autorestart d 1 = Restarts the server every day)
+    |- backup <servername|ID> (backups the server immediately)
+    |- autobackup <servername|ID>  [h|d|W|M] [value] (h = hour, d = day, W = week, M = month| mcserver autorestart d 1 = Creates a backup every day)
+    |- edit <servername|ID> [<parameter> <value>] (if no parameters are specified, all available paramters with the respective values are listed)
+    |- delete <servername|ID> [-all] (-all also deletes all server files)
+    |- dconfirm <yes|no> (optional confirmation to prevent accidental deletion of the server)
+    |- list (lists all servers of the current user)
+
+
+
+mcuser 
+    |- create <username>
+    |- delete <username>
+    |- makeadmin <username> (promotes a user to an admin. root should be the only admin by default)
+    |- server <username> <servername|ID> <add|remove>
+    |- ip <username> <IP> 
+    |- list <username> (lists all used ports and IP of the user (or all servers))

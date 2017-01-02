@@ -17,45 +17,25 @@ constexpr T CTRL( T x ) {
 
 class ExitItem : public NCursesMenuItem {
 public:
-	ExitItem() :
-		NCursesMenuItem( "Exit" ) {}
+	ExitItem();
 
-	virtual bool action() {
-		return true;
-	}
+	virtual bool action();
 };
 
 class BaseMenuItem : public NCursesMenuItem {
 private:
-	static inline const char* convertString( const std::string& text ) {
-		char* str = new char[text.size() + 1];
-		text.copy( str, text.size() );
-
-		return str;
-	}
+	static const char* convertString( const std::string& text );
 
 public:
-	BaseMenuItem( const std::string& text ) :
-		BaseMenuItem( convertString( text ) ) {}
-
-	BaseMenuItem( const char* text ) :
-		NCursesMenuItem( text ) {}
+	BaseMenuItem( const std::string& text );
+	BaseMenuItem( const char* text );
 };
 
 class PassiveItem : public BaseMenuItem {
 private:
-	inline void makeUnselectable() {
-		options_off( O_SELECTABLE );
-	}
+	void makeUnselectable();
 
 public:
-	PassiveItem( const std::string& text ) :
-		BaseMenuItem( text ) {
-		makeUnselectable();
-	}
-
-	PassiveItem( const char* text ) :
-		BaseMenuItem( text ) {
-		makeUnselectable();
-	}
+	PassiveItem( const std::string& text );
+	PassiveItem( const char* text );
 };

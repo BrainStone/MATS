@@ -35,11 +35,11 @@ private:
 	}
 
 public:
-	BaseMenuItem( std::string text ) :
-		BaseMenuItem( convertString( text ) ) {}
+	BaseMenuItem( const std::string& text ) :
+		NCursesMenuItem( convertString( text ) ) {}
 
 	BaseMenuItem( const char* text ) :
-		NCursesMenuItem( text ) {}
+		BaseMenuItem( std::string( text ) ) {}
 };
 
 class PassiveItem : public BaseMenuItem {

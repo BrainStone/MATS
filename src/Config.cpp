@@ -79,6 +79,8 @@ namespace config {
 			verifyGlobalConfig();
 
 			servers = &serversConfig.lookup( settings::servers::servers );
+
+			Server::initalizeServers();
 		} catch ( const libconfig::ParseException& e ) {
 			std::cerr << "Error reading config!" << std::endl;
 			std::cerr << e.getError() << " in file \"" << e.getFile() << "\" on line " << e.getFile();

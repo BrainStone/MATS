@@ -10,6 +10,8 @@
 #include <typeindex>
 #include <unistd.h>
 
+#include "Server.h"
+
 namespace config {
 	namespace fs = boost::filesystem;
 
@@ -39,10 +41,6 @@ namespace config {
 
 	template<typename T>
 	extern void verifySetting( libconfig::Setting& root, const std::string& path, T defaultValue );
-
-	libconfig::Setting& getServer( size_t index );
-	libconfig::Setting& addServer();
-	void removeServer( size_t index );
 
 	namespace settings {
 		typedef const char* label;

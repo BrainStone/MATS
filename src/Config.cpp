@@ -138,6 +138,7 @@ namespace config {
 		libconfig::Setting& root = globalConfig.getRoot();
 
 		verifySetting( root, settings::global::logPath, "/var/log/mats" );
+		verifySetting( root, settings::global::daemonSocket, "/var/run/mats" );
 	}
 
 	void safeServersConfig() {

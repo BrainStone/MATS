@@ -72,6 +72,7 @@ namespace config {
 
 		namespace global {
 			static constexpr label logPath = "logPath";
+			static constexpr label daemonSocket = "daemonSocket";
 		}
 	}
 }

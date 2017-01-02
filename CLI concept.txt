@@ -4,14 +4,14 @@
 
 
 mcserver
-    |- create <servername> [-i IP] [-p Port] [-s Slots] [-Xmx RAM in MiB] [-Xms RAM in MiB] [-c "optional start parameters"] [-j "optionale java parameters"]
+    |- create <servername> [-i IP] [-p Port] [-s Slots] [-Xmx RAM in MiB] [-Xms RAM in MiB] [-c "optional start parameters"] [-j "optional java parameters"]
     |- start <servername|ID>
     |- stop <servername|ID>
     |- autostart <servername|ID> <on|off>
     |- restart <servername|ID> (restarts immediately)
-    |- autorestart <servername|ID> <on|off> [h|d|W|M] [value] (h = hour, d = day, W = week, M = month| mcserver autorestart d 1 = Restarts the server every day)
+    |- autorestart <servername|ID> <on|off> [value<h|d|W|M>] (h = hour, d = day, W = week, M = month| mcserver autorestart 1d = Restarts the server every day)
     |- backup <servername|ID> (backups the server immediately)
-    |- autobackup <servername|ID>  [h|d|W|M] [value] (h = hour, d = day, W = week, M = month| mcserver autorestart d 1 = Creates a backup every day)
+    |- autobackup <servername|ID> [value<h|d|W|M>] (h = hour, d = day, W = week, M = month| mcserver autorestart 1d = Creates a backup every day)
     |- edit <servername|ID> [<parameter> <value>] (if no parameters are specified, all available paramters with the respective values are listed)
     |- delete <servername|ID> [-all] (-all also deletes all server files)
     |- dconfirm <yes|no> (optional confirmation to prevent accidental deletion of the server)

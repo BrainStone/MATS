@@ -36,19 +36,26 @@ private:
 
 public:
 	BaseMenuItem( const std::string& text ) :
-		NCursesMenuItem( convertString( text ) ) {}
+		BaseMenuItem( convertString( text ) ) {}
 
 	BaseMenuItem( const char* text ) :
-		BaseMenuItem( std::string( text ) ) {}
+		NCursesMenuItem( text ) {}
 };
 
 class PassiveItem : public BaseMenuItem {
-public:
-	PassiveItem( const std::string& text ) :
-		BaseMenuItem( text ) {
+private:
+	inline void makeUnselectable() {
 		options_off( O_SELECTABLE );
 	}
 
+public:
+	PassiveItem( const std::string& text ) :
+		BaseMenuItem( text ) {
+		makeUnselectable();
+	}
+
 	PassiveItem( const char* text ) :
-		PassiveItem( std::string( text ) ) {}
+		BaseMenuItem( text ) {
+		makeUnselectable();
+	}
 };

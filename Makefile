@@ -56,7 +56,7 @@ ifneq ($(LIBS),)
 endif
 
 # Verbose option, to output compile and link commands
-export V := false
+export V := true
 export CMD_PREFIX := @
 ifeq ($(V),true)
 	CMD_PREFIX :=

@@ -56,7 +56,7 @@ sure to escape all `/` like this: `\\/`. Also keep the all the `"`s. They are im
 
 ## Documentation
 
-The full documentation can be found at http://doc.brainstonemod.com/MATS/
+The full documentation can be found at https://doc.brainstonemod.com/MATS/
 
 ## Legal Stuff
 

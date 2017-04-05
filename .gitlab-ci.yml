@@ -4,6 +4,7 @@ before_script:
 
 stages:
 - build
+- doc
 - clean
   
 debug:
@@ -19,6 +20,17 @@ release:
   script:
   - make release
   when: on_success
+  except:
+  - tags
+
+doc:
+  stage: doc
+  script:
+  - make doc 
+  when: on_success
+  artifacts:
+    paths:
+    - MATS-doc.*
   except:
   - tags
 

@@ -1,16 +1,24 @@
 #### PROJECT SETTINGS ####
+# Must be either executable, dynamic_library or static_library
+# Defaults to executable if a wrong value is used!
+BIN_TYPE = executable
 # The name of the executable to be created
+# The extension gets appended automatically based on the type
 BIN_NAME := mats
+# The name of the documentation file
+DOC_NAME := MATS-doc
 # Compiler used
 CXX ?= g++
 # Extension of source files used in the project
 SRC_EXT = cpp
+# Extension of header files used in the project
+HEAD_EXT = hpp
 # Path to the source directory, relative to the makefile
 SRC_PATH = src
 # Space-separated pkg-config libraries used by this project
 LIBS = ncursesw ncurses++w formw menuw tic panelw libconfig++
 # General compiler flags
-COMPILE_FLAGS = -std=c++11 -Wall -Wextra -Wpedantic
+COMPILE_FLAGS = -Wall -Wextra -Wpedantic -std=c++11
 # Additional release-specific flags
 RCOMPILE_FLAGS = -D__NDEBUG__ -march=native -O3 -fdata-sections -ffunction-sections -g0
 # Additional debug-specific flags
@@ -25,7 +33,7 @@ RLINK_FLAGS = -Wl,--gc-sections -fopenmp
 DLINK_FLAGS =
 # Destination directory, like a jail or mounted system
 DESTDIR = /
-# Install path (bin/ is appended automatically)
+# Install path (bin/ or lib/ and include/ are appended automatically depending on the type)
 INSTALL_PREFIX = usr/local
 #### END PROJECT SETTINGS ####
 
@@ -33,6 +41,28 @@ INSTALL_PREFIX = usr/local
 
 # Obtains the OS type, either 'Darwin' (OS X) or 'Linux'
 UNAME_S:=$(shell uname -s)
+
+# Adds correct file extension
+ifeq ($(OS), Windows_NT)
+	ifeq ($(BIN_TYPE), static_library)
+		BIN_NAME := $(BIN_NAME).lib
+	else ifeq ($(BIN_TYPE), dynamic_library)
+		BIN_NAME := $(BIN_NAME).dll
+		COMPILE_FLAGS += -fPIC
+	else
+		BIN_NAME := $(BIN_NAME).exe
+		BIN_TYPE := executable
+	endif
+else
+	ifeq ($(BIN_TYPE), static_library)
+		BIN_NAME := lib$(BIN_NAME).a
+	else ifeq ($(BIN_TYPE), dynamic_library)
+		BIN_NAME := lib$(BIN_NAME).so
+		COMPILE_FLAGS += -fPIC
+	else
+		BIN_TYPE := executable
+	endif
+endif
 
 # Function used to check variables. Use on the command line:
 # make print-VARNAME
@@ -83,6 +113,9 @@ else
 	SOURCES = $(shell find $(SRC_PATH) -name '*.$(SRC_EXT)' -printf '%T@\t%p\n' \
 						| sort -k 1nr | cut -f2-)
 endif
+
+# Find all header files in the source directory
+HEADERS = $(shell (cd $(SRC_PATH); find . -name '*.$(HEAD_EXT)'))
 
 # fallback in case the above fails
 rwildcard = $(foreach d, $(wildcard $1*), $(call rwildcard,$d/,$2) \
@@ -178,18 +211,34 @@ dirs:
 # Installs to the set path
 .PHONY: install
 install:
+ifeq ($(BIN_TYPE), executable)
 	@echo "Installing to $(DESTDIR)$(INSTALL_PREFIX)/bin"
 	@$(INSTALL_PROGRAM) $(BIN_PATH)/$(BIN_NAME) $(DESTDIR)$(INSTALL_PREFIX)/bin
-	@echo "Installing config files to /etc/$(BIN_NAME)"
-	@mkdir -p /etc/$(BIN_NAME)
-	@$(INSTALL_DATA) default_config/*.cfg /etc/$(BIN_NAME)
+else
+	@echo "Installing library to $(DESTDIR)$(INSTALL_PREFIX)/lib"
+	@$(INSTALL_PROGRAM) $(BIN_PATH)/$(BIN_NAME) $(DESTDIR)$(INSTALL_PREFIX)/lib
+	@echo "Installing headers to $(DESTDIR)$(INSTALL_PREFIX)/include"
+	@(cd $(SRC_PATH); for header in $(HEADERS); do dir="$(DESTDIR)$(INSTALL_PREFIX)/include/$$(dirname "$$header")"; mkdir -p "$$dir"; $(INSTALL_DATA) "$$header" "$$dir";done)
+ifeq ($(BIN_TYPE), dynamic_library)
+	@ldconfig
+endif
+endif
 
 # Uninstalls the program
 .PHONY: uninstall
 uninstall:
+ifeq ($(BIN_TYPE), executable)
 	@echo "Removing $(DESTDIR)$(INSTALL_PREFIX)/bin/$(BIN_NAME)"
 	@$(RM) $(DESTDIR)$(INSTALL_PREFIX)/bin/$(BIN_NAME)
-	@echo "Config files in /etc/$(BIN_NAME) remain. Delete them manually"
+else
+	@echo "Removing library $(DESTDIR)$(INSTALL_PREFIX)/lib/$(BIN_NAME)"
+	@$(RM) $(DESTDIR)$(INSTALL_PREFIX)/lib/$(BIN_NAME)
+	@echo "Removing headers from $(DESTDIR)$(INSTALL_PREFIX)/include"
+	@(cd $(DESTDIR)$(INSTALL_PREFIX)/include; $(RM) $(HEADERS))
+ifeq ($(BIN_TYPE), dynamic_library)
+	@ldconfig
+endif
+endif
 
 # Removes all build files
 .PHONY: clean
@@ -210,7 +259,13 @@ all: $(BIN_PATH)/$(BIN_NAME)
 $(BIN_PATH)/$(BIN_NAME): $(OBJECTS)
 	@echo "Linking: $@"
 	@$(START_TIME)
+ifeq ($(BIN_TYPE), executable)
 	$(CMD_PREFIX)$(CXX) $(OBJECTS) $(LDFLAGS) -o $@
+else ifeq ($(BIN_TYPE), static_library)
+	$(CMD_PREFIX)$(AR) rcs $@ $(OBJECTS)
+else ifeq ($(BIN_TYPE), dynamic_library)
+	$(CMD_PREFIX)$(CXX) $(OBJECTS) -shared $(LDFLAGS) -o $@
+endif
 	@echo -en "\t Link time: "
 	@$(END_TIME)
 
@@ -226,3 +281,25 @@ $(BUILD_PATH)/%.o: $(SRC_PATH)/%.$(SRC_EXT)
 	$(CMD_PREFIX)$(CXX) $(CXXFLAGS) $(INCLUDES) -MP -MMD -c $< -o $@
 	@echo -en "\t Compile time: "
 	@$(END_TIME)
+
+# Generate Doxygen documentation
+# Doesn't exits if doxygen or the Doxyfile doesn't exist
+ifneq ("$(wildcard doc/Doxyfile)", "")
+ifneq ("$(shell which doxygen)", "")
+.PHONY: doc
+doc:
+	@${RM} "$(DOC_NAME).*"
+	@doxygen doc/Doxyfile
+	@(cd doc/gen/html; zip -r9 ../../../"$(DOC_NAME).zip" *)
+ifneq ("$(shell which pdflatex)", "")
+	@(cd doc/gen/latex; make)
+	@cp doc/gen/latex/refman.pdf "$(DOC_NAME).pdf"
+endif
+
+# Clear Doxygen documentation 
+.PHONY: cleandoc
+cleandoc:
+	@echo "Deleting: $(DOC_NAME).*"
+	@${RM} -r doc/gen "$(DOC_NAME).*"
+endif
+endif

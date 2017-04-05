@@ -53,3 +53,11 @@ If you want to customize the location of the global config run the following com
 sure to escape all `/` like this: `\\/`. Also keep the all the `"`s. They are important!
 
     sed -i 's/"\\/etc\\/mats"/"your\\/path"/g' src/Config.cpp
+
+## Legal Stuff
+
+### Copyright
+Copyright 2016, 2017 Yannick Schinko. All rights reserved
+
+### License
+MATS is licensed under the GNU General Public License v3.0

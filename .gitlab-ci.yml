@@ -3,12 +3,11 @@ before_script:
   - git submodule sync --recursive
 
 stages:
-- debug
-- release
+- build
 - clean
   
 debug:
-  stage: debug
+  stage: build
   script:
   - make debug
   when: on_success
@@ -16,7 +15,7 @@ debug:
   - tags
   
 release:
-  stage: release
+  stage: build
   script:
   - make release
   when: on_success

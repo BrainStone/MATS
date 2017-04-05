@@ -54,6 +54,10 @@ sure to escape all `/` like this: `\\/`. Also keep the all the `"`s. They are im
 
     sed -i 's/"\\/etc\\/mats"/"your\\/path"/g' src/Config.cpp
 
+## Documentation
+
+The full documentation can be found at http://doc.brainstonemod.com/MATS/
+
 ## Legal Stuff
 
 ### Copyright

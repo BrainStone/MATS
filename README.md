@@ -56,7 +56,17 @@ sure to escape all `/` like this: `\\/`. Also keep the all the `"`s. They are im
 
 ## Documentation
 
-The full documentation can be found at https://doc.brainstonemod.com/MATS/
+The full documentation can be found at https://doc.brainstonemod.com/MATS/.<br />
+You can also download the documentation in [HTML](https://doc.brainstonemod.com/MATS/downloads/MATS-doc.zip) (zipped) or
+[PDF](https://doc.brainstonemod.com/MATS/downloads/MATS-doc.pdf) format.
+
+You can also generate the documentation locally. However [`doxygen`](http://www.stack.nl/~dimitri/doxygen/) needs to be
+installed. [`graphviz`](http://www.graphviz.org/) and [`latex`](https://www.latex-project.org/) is not required but
+recommended. To generate the documentation locally run this command:
+
+    make doc
+    
+You will then find a `MATS-doc.zip` file and if you have `latex` installed a `MATS-doc.pdf` file in the base directory.
 
 ## Legal Stuff
 

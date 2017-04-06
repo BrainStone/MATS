@@ -27,8 +27,10 @@ doc:
   stage: doc
   script:
   - make doc
-  - rm -r /var/www/doc/MATS/*
-  - cp -r doc/gen/html/* /var/www/doc/MATS 
+  - rm -r /var/www/doc/MATS
+  - mkdir -p /var/www/doc/MATS/downloads
+  - cp -r doc/gen/html/* /var/www/doc/MATS/
+  - cp MATS-doc.* /var/www/doc/MATS/downloads/
   when: on_success
   artifacts:
     paths:
